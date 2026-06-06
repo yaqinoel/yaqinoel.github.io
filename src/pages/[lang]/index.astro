@@ -1,9 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
+import HomePage from '../../components/HomePage.astro';
 import { defaultLang, isLang, languageList } from '../../i18n/languages';
-import { profile } from '../../i18n/profile';
-import { getFeaturedProjects } from '../../i18n/projects';
 import { useTranslations } from '../../i18n/ui';
 
 export function getStaticPaths() {
@@ -12,79 +10,8 @@ export function getStaticPaths() {
 
 const lang = isLang(Astro.params.lang) ? Astro.params.lang : defaultLang;
 const t = useTranslations(lang);
-const featuredProjects = getFeaturedProjects();
 ---
 
 <Layout lang={lang} title={t('siteTitle')} description={t('heroSummary')}>
-  <section class="hero">
-    <p class="eyebrow">{t('heroRole')}</p>
-    <h1>{t('heroTitle')}</h1>
-    <p class="hero-summary">{t('heroSummary')}</p>
-    <ul class="tag-list">
-      {profile.focusAreas.map((area) => <li>{area}</li>)}
-    </ul>
-    <div class="button-row">
-      <a class="button primary" href={`/${lang}/projects/`}>{t('viewProjects')}</a>
-      <a class="button" href={`mailto:${profile.email}`}>{t('contactMe')}</a>
-    </div>
-  </section>
-
-  <section class="section">
-    <h2>{t('selectedProjects')}</h2>
-    <div class="grid">
-      {featuredProjects.map((project) => <ProjectCard lang={lang} project={project} />)}
-    </div>
-  </section>
-
-  <section class="section split">
-    <div>
-      <h2>{t('technicalFocus')}</h2>
-      <ul class="tag-list">
-        {profile.skills.map((skill) => <li>{skill}</li>)}
-      </ul>
-    </div>
-    <aside>
-      <p>{profile.location}</p>
-      <p>{profile.email}</p>
-      <p><a href={profile.github}>GitHub: yaqinoel</a></p>
-    </aside>
-  </section>
+  <HomePage lang={lang} />
 </Layout>
-
-<style>
-  .hero {
-    padding: 58px 0 64px;
-  }
-
-  .hero-summary {
-    max-width: 760px;
-    font-size: 1.15rem;
-  }
-
-  .split {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 32px;
-  }
-
-  aside {
-    padding: 20px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--panel);
-  }
-
-  aside p:last-child {
-    margin-bottom: 0;
-  }
-
-  aside a {
-    color: var(--accent);
-  }
-
-  @media (max-width: 820px) {
-    .split {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

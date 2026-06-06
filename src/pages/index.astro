@@ -1,3 +1,13 @@
 ---
-return Astro.redirect('/en/');
+import HomePage from '../components/HomePage.astro';
+import Layout from '../layouts/Layout.astro';
+import { defaultLang } from '../i18n/languages';
+import { useTranslations } from '../i18n/ui';
+
+const lang = defaultLang;
+const t = useTranslations(lang);
 ---
+
+<Layout lang={lang} title={t('siteTitle')} description={t('heroSummary')}>
+  <HomePage lang={lang} />
+</Layout>
