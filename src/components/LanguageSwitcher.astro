@@ -1,0 +1,40 @@
+---
+import { languageList, languages, type Lang } from '../i18n/languages';
+
+type Props = {
+  lang: Lang;
+};
+
+const { lang } = Astro.props;
+const restPath = Astro.url.pathname.replace(/^\/(en|fr|zh)/, '') || '/';
+---
+
+<div class="language-switcher" aria-label="Language switcher">
+  {
+    languageList.map((item) => (
+      <a class:list={[{ active: item === lang }]} href={`/${item}${restPath}`}>
+        {languages[item]}
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .language-switcher {
+    display: flex;
+    gap: 6px;
+  }
+
+  a {
+    padding: 6px 9px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  a.active {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+</style>

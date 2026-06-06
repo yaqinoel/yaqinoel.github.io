@@ -1,0 +1,39 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { defaultLang, isLang, languageList } from '../../../i18n/languages';
+import { profile } from '../../../i18n/profile';
+import { projects } from '../../../i18n/projects';
+
+export function getStaticPaths() {
+  return languageList.flatMap((lang) =>
+    projects.map((project) => ({
+      params: { lang, slug: project.slug },
+      props: { project },
+    })),
+  );
+}
+
+const lang = isLang(Astro.params.lang) ? Astro.params.lang : defaultLang;
+const { project } = Astro.props;
+---
+
+<Layout lang={lang} title={`${project.title[lang]} | ${profile.name}`} description={project.summary[lang]}>
+  <article class="project-detail">
+    <p class="eyebrow">{project.category[lang]}</p>
+    <h1>{project.title[lang]}</h1>
+    <p class="summary">{project.summary[lang]}</p>
+    <ul class="tag-list">
+      {project.tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+  </article>
+</Layout>
+
+<style>
+  .project-detail {
+    max-width: 880px;
+  }
+
+  .summary {
+    font-size: 1.16rem;
+  }
+</style>

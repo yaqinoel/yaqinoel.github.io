@@ -1,0 +1,49 @@
+---
+import type { Lang } from '../i18n/languages';
+import type { Project } from '../i18n/projects';
+
+type Props = {
+  lang: Lang;
+  project: Project;
+};
+
+const { lang, project } = Astro.props;
+---
+
+<article class="project-card">
+  <p class="category">{project.category[lang]}</p>
+  <h3>
+    <a href={`/${lang}/projects/${project.slug}/`}>{project.title[lang]}</a>
+  </h3>
+  <p>{project.summary[lang]}</p>
+  <ul class="tag-list">
+    {project.tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+</article>
+
+<style>
+  .project-card {
+    min-height: 100%;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(23, 26, 31, 0.78);
+  }
+
+  .category {
+    margin-bottom: 10px;
+    color: var(--accent-strong);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  h3 {
+    margin-bottom: 12px;
+    font-size: 1.15rem;
+    line-height: 1.35;
+  }
+
+  h3 a:hover {
+    color: var(--accent);
+  }
+</style>

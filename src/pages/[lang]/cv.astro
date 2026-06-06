@@ -1,0 +1,25 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { defaultLang, isLang, languageList } from '../../i18n/languages';
+import { profile } from '../../i18n/profile';
+import { useTranslations } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return languageList.map((lang) => ({ params: { lang } }));
+}
+
+const lang = isLang(Astro.params.lang) ? Astro.params.lang : defaultLang;
+const t = useTranslations(lang);
+---
+
+<Layout lang={lang} title={`${t('navCV')} | ${profile.name}`}>
+  <section>
+    <p class="eyebrow">{t('navCV')}</p>
+    <h1>{t('navCV')}</h1>
+    <p>{t('cvIntro')}</p>
+    <div class="button-row">
+      <a class="button" href={`mailto:${profile.email}`}>{profile.email}</a>
+      <a class="button" href={profile.github}>GitHub</a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,62 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import type { Lang } from '../i18n/languages';
+import { useTranslations } from '../i18n/ui';
+
+type Props = {
+  lang: Lang;
+};
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<header class="site-header">
+  <a class="brand" href={`/${lang}/`}>ZHANG Yaqi</a>
+  <nav aria-label="Primary navigation">
+    <a href={`/${lang}/`}>{t('navHome')}</a>
+    <a href={`/${lang}/about/`}>{t('navAbout')}</a>
+    <a href={`/${lang}/projects/`}>{t('navProjects')}</a>
+    <a href={`/${lang}/cv/`}>{t('navCV')}</a>
+  </nav>
+  <LanguageSwitcher lang={lang} />
+</header>
+
+<style>
+  .site-header {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 24px;
+    width: min(100%, var(--max));
+    margin: 0 auto;
+    padding: 22px 24px;
+  }
+
+  .brand {
+    font-weight: 800;
+  }
+
+  nav {
+    display: flex;
+    gap: 18px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  nav a:hover,
+  .brand:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 760px) {
+    .site-header {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    nav {
+      flex-wrap: wrap;
+    }
+  }
+</style>
