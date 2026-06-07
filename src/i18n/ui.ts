@@ -17,6 +17,8 @@ export const ui = {
     technicalFocus: 'Technical focus',
     education: 'Education',
     experience: 'Experience',
+    sourceCode: 'Source code',
+    keyHighlights: 'Key highlights',
     projectsIntro:
       'A focused selection of academic, research-oriented and software engineering projects.',
     cvIntro: 'CV download will be added here once the latest version is ready.',
@@ -37,6 +39,8 @@ export const ui = {
     technicalFocus: 'Axes techniques',
     education: 'Formation',
     experience: 'Experience',
+    sourceCode: 'Code source',
+    keyHighlights: 'Points cles',
     projectsIntro:
       'Une selection de projets academiques, de recherche appliquee et de developpement logiciel.',
     cvIntro: 'Le CV sera ajoute ici lorsque la version la plus recente sera prete.',
@@ -57,6 +61,8 @@ export const ui = {
     technicalFocus: '技术方向',
     education: '教育背景',
     experience: '经历',
+    sourceCode: '源代码',
+    keyHighlights: '技术亮点',
     projectsIntro: '这里展示我的课程项目、科研导向项目和软件开发项目。',
     cvIntro: '最新版 CV 准备好后会放在这里下载。',
   },

@@ -3,6 +3,7 @@ import Layout from '../../../layouts/Layout.astro';
 import { defaultLang, isLang, languageList } from '../../../i18n/languages';
 import { profile } from '../../../i18n/profile';
 import { projects } from '../../../i18n/projects';
+import { useTranslations } from '../../../i18n/ui';
 
 export function getStaticPaths() {
   return languageList.flatMap((lang) =>
@@ -15,6 +16,7 @@ export function getStaticPaths() {
 
 const lang = isLang(Astro.params.lang) ? Astro.params.lang : defaultLang;
 const { project } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <Layout lang={lang} title={`${project.title[lang]} | ${profile.name}`} description={project.summary[lang]}>
@@ -22,9 +24,41 @@ const { project } = Astro.props;
     <p class="eyebrow">{project.category[lang]}</p>
     <h1>{project.title[lang]}</h1>
     <p class="summary">{project.summary[lang]}</p>
+    <div class="button-row">
+      {
+        project.repositoryUrl && (
+          <a class="button primary" href={project.repositoryUrl}>
+            {t('sourceCode')}
+          </a>
+        )
+      }
+    </div>
+
+    {
+      project.image && (
+        <figure>
+          <img src={project.image.src} alt={project.image.alt[lang]} />
+          {project.image.caption && <figcaption>{project.image.caption[lang]}</figcaption>}
+        </figure>
+      )
+    }
+
     <ul class="tag-list">
       {project.tags.map((tag) => <li>{tag}</li>)}
     </ul>
+
+    {
+      project.highlights && (
+        <section class="highlights">
+          <h2>{t('keyHighlights')}</h2>
+          <ul>
+            {project.highlights.map((highlight) => (
+              <li>{highlight[lang]}</li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
   </article>
 </Layout>
 
@@ -35,5 +69,39 @@ const { project } = Astro.props;
 
   .summary {
     font-size: 1.16rem;
+  }
+
+  figure {
+    margin: 34px 0 24px;
+  }
+
+  img {
+    width: 100%;
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+  }
+
+  figcaption {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .highlights {
+    margin-top: 42px;
+    padding-top: 34px;
+    border-top: 1px solid var(--line);
+  }
+
+  .highlights ul {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding-left: 20px;
+    color: var(--muted);
+    line-height: 1.7;
   }
 </style>

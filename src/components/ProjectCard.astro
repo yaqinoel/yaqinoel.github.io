@@ -11,6 +11,13 @@ const { lang, project } = Astro.props;
 ---
 
 <article class="project-card">
+  {
+    project.image && (
+      <a class="thumbnail" href={`/${lang}/projects/${project.slug}/`} aria-label={project.title[lang]}>
+        <img src={project.image.src} alt={project.image.alt[lang]} loading="lazy" />
+      </a>
+    )
+  }
   <p class="category">{project.category[lang]}</p>
   <h3>
     <a href={`/${lang}/projects/${project.slug}/`}>{project.title[lang]}</a>
@@ -28,6 +35,23 @@ const { lang, project } = Astro.props;
     border: 1px solid var(--line);
     border-radius: 8px;
     background: rgba(23, 26, 31, 0.78);
+  }
+
+  .thumbnail {
+    display: block;
+    width: 100%;
+    margin-bottom: 16px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: var(--panel-strong);
+    aspect-ratio: 16 / 10;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
   }
 
   .category {

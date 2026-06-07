@@ -8,6 +8,13 @@ export type Project = {
   summary: LocalizedText;
   category: LocalizedText;
   tags: string[];
+  repositoryUrl?: string;
+  image?: {
+    src: string;
+    alt: LocalizedText;
+    caption?: LocalizedText;
+  };
+  highlights?: LocalizedText[];
   featured?: boolean;
 };
 
@@ -35,21 +42,57 @@ export const projects: Project[] = [
   {
     slug: 'ray-tracing-renderer',
     title: {
-      en: 'Ray Tracing Renderer',
-      fr: 'Moteur de rendu Ray Tracing',
-      zh: '光线追踪渲染器',
+      en: 'CPU Ray Tracer',
+      fr: 'Ray tracer CPU',
+      zh: 'CPU 光线追踪渲染器',
     },
     category: {
-      en: 'Personal coursework project',
-      fr: 'Projet individuel de cours',
-      zh: '个人课程项目',
+      en: 'Programmation 3D coursework project',
+      fr: 'Projet de cours Programmation 3D',
+      zh: 'Programmation 3D 课程项目',
     },
     summary: {
-      en: 'A ray tracing project implementing diffuse reflection, specular reflection, refraction, soft shadows, textures, OpenMP acceleration and Kd-tree acceleration.',
-      fr: 'Un projet de ray tracing avec reflexion diffuse, reflexion speculaire, refraction, ombres douces, textures, acceleration OpenMP et acceleration par Kd-tree.',
-      zh: '一个光线追踪项目，实现了漫反射、镜面反射、透明物体折射、软阴影、纹理、OpenMP 多线程加速和 Kd-tree 加速。',
+      en: 'A C++ CPU ray tracer built from a minimal OpenGL/GLUT viewer. It renders a Cornell-box scene with recursive reflection and refraction, soft shadows, textured surfaces, triangle meshes, Kd-Tree acceleration, OpenMP parallel rendering and multi-sample anti-aliasing.',
+      fr: 'Un ray tracer CPU en C++ developpe a partir d un viewer OpenGL/GLUT minimal. Il rend une scene de type Cornell box avec reflection et refraction recursives, ombres douces, textures, maillages triangulaires, acceleration Kd-Tree, rendu parallele OpenMP et anti-crenelage multi-echantillons.',
+      zh: '一个基于 C++ 的 CPU 光线追踪器，从最小 OpenGL/GLUT viewer 扩展而来。项目渲染了 Cornell-box 场景，支持递归反射与折射、软阴影、纹理表面、三角网格、Kd-Tree 加速、OpenMP 并行渲染和多重采样抗锯齿。',
     },
-    tags: ['C++', 'Ray Tracing', 'OpenMP', 'Kd-tree'],
+    tags: ['C++', 'OpenGL/GLUT', 'Ray Tracing', 'OpenMP', 'Kd-Tree', 'Textures'],
+    repositoryUrl: 'https://github.com/yaqinoel/HAI719I-Projet-Raytracer',
+    image: {
+      src: 'https://raw.githubusercontent.com/yaqinoel/HAI719I-Projet-Raytracer/main/img/results/final-render.png',
+      alt: {
+        en: 'Final Cornell-box render produced by the CPU ray tracer',
+        fr: 'Rendu final de la Cornell box produit par le ray tracer CPU',
+        zh: 'CPU 光线追踪器渲染的 Cornell-box 最终结果',
+      },
+      caption: {
+        en: 'Final Cornell-box render with Suzanne mesh, mirror sphere, glass sphere, textured wall and soft shadows.',
+        fr: 'Rendu final de la Cornell box avec maillage Suzanne, sphere miroir, sphere de verre, mur texture et ombres douces.',
+        zh: '最终 Cornell-box 渲染结果，包含 Suzanne 网格、镜面球、玻璃球、纹理墙面和软阴影。',
+      },
+    },
+    highlights: [
+      {
+        en: 'Implemented ray-sphere, ray-plane, ray-square and ray-triangle intersection tests with nearest-hit selection.',
+        fr: 'Implementation des intersections rayon-sphere, rayon-plan, rayon-carre et rayon-triangle avec selection de l intersection la plus proche.',
+        zh: '实现了 ray-sphere、ray-plane、ray-square 和 ray-triangle 相交测试，并完成最近交点选择。',
+      },
+      {
+        en: 'Added Blinn-Phong shading, hard shadows and stochastic soft shadows using spherical area-light sampling.',
+        fr: 'Ajout du shading Blinn-Phong, des ombres dures et des ombres douces stochastiques par echantillonnage d une lumiere spherique.',
+        zh: '实现了 Blinn-Phong 光照、硬阴影，并通过球形面积光源采样实现随机软阴影。',
+      },
+      {
+        en: 'Implemented recursive mirror reflection and glass refraction with Snell refraction, Fresnel reflection and Schlick approximation.',
+        fr: 'Implementation de la reflection miroir recursive et de la refraction du verre avec loi de Snell, reflection de Fresnel et approximation de Schlick.',
+        zh: '实现了递归镜面反射和玻璃折射，包含 Snell 折射、Fresnel 反射和 Schlick 近似。',
+      },
+      {
+        en: 'Accelerated triangle mesh intersection with a Kd-Tree and parallelized pixel rendering with OpenMP.',
+        fr: 'Acceleration des intersections de maillages triangulaires avec un Kd-Tree et parallelisation du rendu des pixels avec OpenMP.',
+        zh: '使用 Kd-Tree 加速三角网格求交，并使用 OpenMP 对像素渲染进行并行化。',
+      },
+    ],
     featured: true,
   },
   {
