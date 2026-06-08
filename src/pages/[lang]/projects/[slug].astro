@@ -17,6 +17,10 @@ export function getStaticPaths() {
 const lang = isLang(Astro.params.lang) ? Astro.params.lang : defaultLang;
 const { project } = Astro.props;
 const t = useTranslations(lang);
+const resultImages = project.images ?? (project.image ? [project.image] : []);
+const keyHighlightItems = project.sections?.[0]?.items ?? project.highlights;
+const contributionItems = project.sections?.[1]?.items;
+const showImagesWithContributions = Boolean(contributionItems && resultImages.length);
 ---
 
 <Layout lang={lang} title={`${project.title[lang]} | ${profile.name}`} description={project.summary[lang]}>
@@ -24,38 +28,71 @@ const t = useTranslations(lang);
     <p class="eyebrow">{project.category[lang]}</p>
     <h1>{project.title[lang]}</h1>
     <p class="summary">{project.summary[lang]}</p>
-    <div class="button-row">
-      {
-        project.repositoryUrl && (
-          <a class="button primary" href={project.repositoryUrl}>
-            {t('sourceCode')}
-          </a>
-        )
-      }
-    </div>
 
     {
-      project.image && (
-        <figure>
-          <img src={project.image.src} alt={project.image.alt[lang]} />
-          {project.image.caption && <figcaption>{project.image.caption[lang]}</figcaption>}
+      project.video && (
+        <figure class="lead-media">
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source src={project.video.webm} type="video/webm" />
+          </video>
+          {project.video.caption && <figcaption>{project.video.caption[lang]}</figcaption>}
         </figure>
       )
     }
 
-    <ul class="tag-list">
+    {!showImagesWithContributions && resultImages.map((image) => (
+        <figure>
+          <img src={image.src} alt={image.alt[lang]} />
+          {image.caption && <figcaption>{image.caption[lang]}</figcaption>}
+        </figure>
+      ))}
+
+    <ul class="tag-list project-tags">
       {project.tags.map((tag) => <li>{tag}</li>)}
     </ul>
 
+    <section class="project-links">
+      {project.sourceNote && <p>{project.sourceNote[lang]}</p>}
+      <div class="button-row">
+        {
+          project.repositoryUrl && (
+            <a class="button primary" href={project.repositoryUrl}>
+              {t('sourceCode')}
+            </a>
+          )
+        }
+        {project.demoUrl && <a class="button" href={project.demoUrl}>{t('demo')}</a>}
+      </div>
+    </section>
+
     {
-      project.highlights && (
+      keyHighlightItems && (
         <section class="highlights">
           <h2>{t('keyHighlights')}</h2>
           <ul>
-            {project.highlights.map((highlight) => (
+            {keyHighlightItems.map((highlight) => (
               <li>{highlight[lang]}</li>
             ))}
           </ul>
+        </section>
+      )
+    }
+
+    {
+      contributionItems && (
+        <section class="highlights">
+          <h2>{t('myContributions')}</h2>
+          <ul>
+            {contributionItems.map((contribution) => (
+              <li>{contribution[lang]}</li>
+            ))}
+          </ul>
+          {showImagesWithContributions && resultImages.map((image) => (
+            <figure>
+              <img src={image.src} alt={image.alt[lang]} />
+              {image.caption && <figcaption>{image.caption[lang]}</figcaption>}
+            </figure>
+          ))}
         </section>
       )
     }
@@ -71,8 +108,16 @@ const t = useTranslations(lang);
     font-size: 1.16rem;
   }
 
+  .project-tags {
+    margin-top: 34px;
+  }
+
   figure {
     margin: 34px 0 24px;
+  }
+
+  .lead-media {
+    margin-top: 28px;
   }
 
   img {
@@ -83,11 +128,29 @@ const t = useTranslations(lang);
     background: var(--panel);
   }
 
+  video {
+    width: 100%;
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #000;
+  }
+
   figcaption {
     margin-top: 10px;
     color: var(--muted);
     font-size: 0.94rem;
     line-height: 1.6;
+  }
+
+  .project-links {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+
+  .project-links p {
+    margin-bottom: 18px;
   }
 
   .highlights {

@@ -8,13 +8,14 @@ type Props = {
 };
 
 const { lang, project } = Astro.props;
+const thumbnail = project.coverImage ?? project.image;
 ---
 
 <article class="project-card">
   {
-    project.image && (
+    thumbnail && (
       <a class="thumbnail" href={`/${lang}/projects/${project.slug}/`} aria-label={project.title[lang]}>
-        <img src={project.image.src} alt={project.image.alt[lang]} loading="lazy" />
+        <img src={thumbnail.src} alt={thumbnail.alt[lang]} loading="lazy" />
       </a>
     )
   }

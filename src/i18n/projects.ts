@@ -2,6 +2,18 @@ import type { Lang } from './languages';
 
 type LocalizedText = Record<Lang, string>;
 
+type ProjectImage = {
+  src: string;
+  alt: LocalizedText;
+  caption?: LocalizedText;
+};
+
+type ProjectSection = {
+  title: LocalizedText;
+  body?: LocalizedText;
+  items?: LocalizedText[];
+};
+
 export type Project = {
   slug: string;
   title: LocalizedText;
@@ -9,11 +21,16 @@ export type Project = {
   category: LocalizedText;
   tags: string[];
   repositoryUrl?: string;
-  image?: {
-    src: string;
-    alt: LocalizedText;
+  demoUrl?: string;
+  sourceNote?: LocalizedText;
+  coverImage?: ProjectImage;
+  image?: ProjectImage;
+  images?: ProjectImage[];
+  video?: {
+    webm: string;
     caption?: LocalizedText;
   };
+  sections?: ProjectSection[];
   highlights?: LocalizedText[];
   featured?: boolean;
 };
@@ -22,9 +39,9 @@ export const projects: Project[] = [
   {
     slug: 'position-based-dynamics',
     title: {
-      en: 'Position-Based Dynamics Simulation Engine',
-      fr: 'Moteur de simulation base sur la dynamique positionnelle',
-      zh: '基于位置动力学的物理模拟引擎',
+      en: 'NomRigide - Position Based Dynamics Soft-Body Simulator',
+      fr: 'NomRigide - Simulateur de corps deformables par Position Based Dynamics',
+      zh: 'NomRigide - 基于 Position Based Dynamics 的软体物理仿真器',
     },
     category: {
       en: 'Research-oriented TER project',
@@ -32,11 +49,160 @@ export const projects: Project[] = [
       zh: '科研导向 TER 项目',
     },
     summary: {
-      en: 'A real-time non-rigid body simulation engine reproducing core ideas from Position Based Dynamics, with collision constraints, a parallel Jacobi solver, OpenMP collision detection and Small Steps stabilization.',
-      fr: 'Un moteur de simulation temps reel pour corps non rigides, base sur la reproduction des idees principales de Position Based Dynamics, avec contraintes de collision, solveur Jacobi parallele, detection de collision avec OpenMP et stabilisation Small Steps.',
-      zh: '一个实时非刚体物理模拟引擎，复现 Position Based Dynamics 论文中的核心算法，实现了碰撞约束、并行 Jacobi 求解器、OpenMP 碰撞检测和 Small Steps 稳定化。',
+      en: 'NomRigide is a group TER research project on real-time soft-body simulation with Position Based Dynamics. The goal was to reproduce position-based simulation methods from graphics research and build an interactive simulator for visually plausible non-rigid deformation.',
+      fr: 'NomRigide est un projet TER de groupe sur la simulation temps reel de corps deformables avec Position Based Dynamics. L objectif etait de reproduire des methodes de simulation positionnelle issues de la recherche en informatique graphique et de construire un simulateur interactif de deformation non rigide visuellement plausible.',
+      zh: 'NomRigide 是一个小组合作完成的 TER 科研导向项目，主题是基于 Position Based Dynamics 的实时软体物理模拟。项目目标是复现图形学论文中的位置动力学方法，并开发一个能够交互展示非刚体形变的仿真器。',
     },
-    tags: ['C++', 'OpenMP', 'PBD', 'Collision Detection', 'Simulation'],
+    tags: ['C++', 'OpenGL', 'OpenMP', 'PBD', 'Soft-Body Simulation', 'Collision Detection'],
+    repositoryUrl: 'https://github.com/yaqinoel/HAI823I-ProjetTER-PBD',
+    demoUrl:
+      'https://youtube.com/playlist?list=PLYodcN4rsfQpwS9PmS207VJiBoG1fg8dE&si=uHDoopbiGgacPyaI',
+    sourceNote: {
+      en: 'For detailed implementation notes, build instructions, references and full results, see the source code repository.',
+      fr: 'Pour les details d implementation, les instructions de compilation, les references et les resultats complets, consultez le depot du code source.',
+      zh: '如果想查看更详细的实现说明、编译运行方法、参考论文和完整结果，可以进入源码仓库。',
+    },
+    coverImage: {
+      src: '/media/projects/pbd/page_image.png',
+      alt: {
+        en: 'NomRigide project cover image',
+        fr: 'Image de couverture du projet NomRigide',
+        zh: 'NomRigide 项目封面图',
+      },
+      caption: {
+        en: 'NomRigide project cover image.',
+        fr: 'Image de couverture du projet NomRigide.',
+        zh: 'NomRigide 项目封面图。',
+      },
+    },
+    images: [
+      {
+        src: 'https://raw.githubusercontent.com/yaqinoel/HAI823I-ProjetTER-PBD/main/results/collision-comparison.png',
+        alt: {
+          en: 'Collision constraints comparison from the NomRigide simulator',
+          fr: 'Comparaison des contraintes de collision du simulateur NomRigide',
+          zh: 'NomRigide 仿真器中的碰撞约束对比结果',
+        },
+        caption: {
+          en: 'Collision constraints comparison. From left to right, more collision cases are enabled, reducing visible penetrations during simulation.',
+          fr: 'Comparaison des contraintes de collision. De gauche a droite, davantage de cas de collision sont actives, ce qui reduit les penetrations visibles pendant la simulation.',
+          zh: '碰撞约束对比结果。从左到右，启用的碰撞情况逐渐增加，从而减少模拟过程中的可见穿透。',
+        },
+      },
+      {
+        src: 'https://raw.githubusercontent.com/yaqinoel/HAI823I-ProjetTER-PBD/main/results/small-steps-comparison.png',
+        alt: {
+          en: 'Small Steps comparison from the NomRigide soft-body simulator',
+          fr: 'Comparaison Small Steps du simulateur de corps deformables NomRigide',
+          zh: 'NomRigide 软体物理仿真器中的 Small Steps 对比结果',
+        },
+        caption: {
+          en: 'Small Steps comparison showing how substepping improves simulation stability and reduces visible penetration.',
+          fr: 'Comparaison Small Steps montrant comment les sous-pas ameliorent la stabilite et reduisent les penetrations visibles.',
+          zh: 'Small Steps 对比结果，展示子步进如何提升仿真稳定性并减少可见穿透。',
+        },
+      },
+    ],
+    video: {
+      webm: '/media/projects/pbd/demo.webm',
+      caption: {
+        en: 'Real-time soft-body simulation demo from the NomRigide PBD simulator.',
+        fr: 'Demo temps reel de simulation de corps deformables avec le simulateur PBD NomRigide.',
+        zh: 'NomRigide PBD 仿真器中的实时软体物理模拟演示。',
+      },
+    },
+    sections: [
+      {
+        title: {
+          en: 'What the team built',
+          fr: 'Ce que l equipe a realise',
+          zh: '小组实现的内容',
+        },
+        items: [
+          {
+            en: 'Real-time 3D simulation of deformable non-rigid objects represented by particles, mesh elements and constraints.',
+            fr: 'Simulation 3D temps reel d objets deformables non rigides representes par particules, elements de maillage et contraintes.',
+            zh: '基于粒子、网格元素和约束表示的实时 3D 非刚体软体模拟。',
+          },
+          {
+            en: 'Position Based Dynamics pipeline with external forces, damping, position prediction, collision detection, iterative constraint projection and velocity update.',
+            fr: 'Pipeline Position Based Dynamics avec forces externes, amortissement, prediction des positions, detection de collisions, projection iterative des contraintes et mise a jour des vitesses.',
+            zh: '完整的 Position Based Dynamics 流程，包括外力、阻尼、位置预测、碰撞检测、迭代约束投影和速度更新。',
+          },
+          {
+            en: 'Distance, bending, volume, collision and self-collision constraints for deformable objects.',
+            fr: 'Contraintes de distance, flexion, volume, collision et auto-collision pour les objets deformables.',
+            zh: '面向可变形物体的距离、弯曲、体积、碰撞和自碰撞约束。',
+          },
+          {
+            en: 'Interactive OpenGL/ImGui application with multiple rendering modes, test scenes, profiling panels and OpenMP-based acceleration.',
+            fr: 'Application interactive OpenGL/ImGui avec plusieurs modes de rendu, scenes de test, panneaux de profilage et acceleration basee sur OpenMP.',
+            zh: '基于 OpenGL/ImGui 的交互式程序，支持多种渲染模式、测试场景、性能分析面板和 OpenMP 加速。',
+          },
+        ],
+      },
+      {
+        title: {
+          en: 'My contributions',
+          fr: 'Mes contributions',
+          zh: '我负责的内容',
+        },
+        items: [
+          {
+            en: 'Implemented dynamic edge vs. static triangle collision detection and the corresponding collision constraint.',
+            fr: 'Implementation de la detection de collision arete dynamique contre triangle statique et de la contrainte de collision correspondante.',
+            zh: '实现动态边与静态三角形之间的碰撞检测以及对应的碰撞约束。',
+          },
+          {
+            en: 'Implemented dynamic triangle vs. static point collision detection and constraint projection using barycentric correction distribution.',
+            fr: 'Implementation de la detection triangle dynamique contre point statique et de la projection de contrainte avec distribution barycentrique des corrections.',
+            zh: '实现动态三角形与静态点之间的碰撞检测，并使用重心坐标分配约束修正量。',
+          },
+          {
+            en: 'Implemented the Small Steps strategy to improve stability and reduce visible penetration during simulation.',
+            fr: 'Implementation de la strategie Small Steps pour ameliorer la stabilite et reduire les penetrations visibles pendant la simulation.',
+            zh: '实现 Small Steps 子步进策略，提高模拟稳定性并减少可见穿透。',
+          },
+          {
+            en: 'Developed and parallelized a Jacobi-style solver, then parallelized several collision detection loops with OpenMP.',
+            fr: 'Developpement et parallelisation d un solveur de type Jacobi, puis parallelisation de plusieurs boucles de detection de collision avec OpenMP.',
+            zh: '开发并并行化 Jacobi 风格的求解器，同时使用 OpenMP 并行化多个碰撞检测循环。',
+          },
+          {
+            en: 'Added profiling support to compare bottlenecks and OpenMP speedups across collision and constraint projection stages.',
+            fr: 'Ajout du profilage pour comparer les goulots d etranglement et les gains OpenMP dans les etapes de collision et de projection des contraintes.',
+            zh: '加入性能分析功能，用于比较碰撞检测与约束投影阶段的瓶颈和 OpenMP 加速效果。',
+          },
+        ],
+      },
+    ],
+    highlights: [
+      {
+        en: 'Implemented dynamic edge vs. static triangle collision constraints to reduce penetration when an edge crosses a static surface.',
+        fr: 'Implementation de contraintes de collision arete dynamique contre triangle statique pour reduire les penetrations lorsqu une arete traverse une surface statique.',
+        zh: '实现了动态边与静态三角形之间的碰撞约束，减少边穿过静态表面时产生的穿透现象。',
+      },
+      {
+        en: 'Implemented dynamic triangle vs. static point collision constraints, distributing corrections over triangle vertices using barycentric coordinates.',
+        fr: 'Implementation de contraintes de collision triangle dynamique contre point statique, avec distribution des corrections sur les sommets du triangle via coordonnees barycentriques.',
+        zh: '实现了动态三角形与静态点之间的碰撞约束，并使用重心坐标将修正量分配到三角形顶点。',
+      },
+      {
+        en: 'Implemented a Small Steps substepping strategy to improve simulation stability and reduce abrupt corrections.',
+        fr: 'Implementation d une strategie Small Steps avec sous-pas pour ameliorer la stabilite de la simulation et reduire les corrections brusques.',
+        zh: '实现了 Small Steps 子步进策略，提高模拟稳定性并减少突兀的约束修正。',
+      },
+      {
+        en: 'Developed a Jacobi-style solver and parallelized it with OpenMP, while also parallelizing several collision detection loops.',
+        fr: 'Developpement d un solveur de type Jacobi parallelise avec OpenMP, ainsi que parallelisation de plusieurs boucles de detection de collision.',
+        zh: '开发了 Jacobi 风格的约束求解器并使用 OpenMP 并行化，同时并行化了多个碰撞检测循环。',
+      },
+      {
+        en: 'Added profiling tools to compare simulation bottlenecks and measure OpenMP speedups across collision and constraint projection steps.',
+        fr: 'Ajout d outils de profilage pour comparer les goulots d etranglement et mesurer les gains OpenMP dans les etapes de collision et de projection de contraintes.',
+        zh: '加入性能分析工具，用于比较仿真瓶颈并测量碰撞检测与约束投影阶段的 OpenMP 加速效果。',
+      },
+    ],
     featured: true,
   },
   {
