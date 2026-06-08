@@ -32,7 +32,8 @@ const showImagesWithContributions = Boolean(contributionItems && resultImages.le
     {
       project.video && (
         <figure class="lead-media">
-          <video autoplay muted loop playsinline controls preload="metadata">
+          <video autoplay muted loop playsinline controls preload="metadata" poster={project.video.poster}>
+            {project.video.mp4 && <source src={project.video.mp4} type="video/mp4" />}
             <source src={project.video.webm} type="video/webm" />
           </video>
           {project.video.caption && <figcaption>{project.video.caption[lang]}</figcaption>}

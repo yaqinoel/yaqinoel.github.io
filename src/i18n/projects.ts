@@ -28,6 +28,8 @@ export type Project = {
   images?: ProjectImage[];
   video?: {
     webm: string;
+    mp4?: string;
+    poster?: string;
     caption?: LocalizedText;
   };
   sections?: ProjectSection[];
@@ -105,6 +107,8 @@ export const projects: Project[] = [
     ],
     video: {
       webm: '/media/projects/pbd/demo.webm',
+      mp4: '/media/projects/pbd/demo.mp4',
+      poster: '/media/projects/pbd/page_image.png',
       caption: {
         en: 'Real-time soft-body simulation demo from the NomRigide PBD simulator.',
         fr: 'Demo temps reel de simulation de corps deformables avec le simulateur PBD NomRigide.',
