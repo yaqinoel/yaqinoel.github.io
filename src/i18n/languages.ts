@@ -1,6 +1,6 @@
 export const languages = {
   en: 'English',
-  fr: 'Francais',
+  fr: 'Français',
   zh: '中文',
 } as const;
 
