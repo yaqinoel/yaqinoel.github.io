@@ -12,6 +12,6 @@ const lang = isLang(Astro.params.lang) ? Astro.params.lang : defaultLang;
 const t = useTranslations(lang);
 ---
 
-<Layout lang={lang} title={t('siteTitle')} description={t('heroSummary')}>
+<Layout lang={lang} title={t('siteTitle')} description={t('heroSummary')} particleBackground>
   <HomePage lang={lang} />
 </Layout>

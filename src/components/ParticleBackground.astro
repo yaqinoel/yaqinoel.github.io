@@ -1,0 +1,405 @@
+<div class="particle-background" data-particle-background aria-hidden="true">
+  <canvas data-particle-canvas></canvas>
+</div>
+
+<script>
+  import * as THREE from 'three';
+  import { TeapotGeometry } from 'three/examples/jsm/geometries/TeapotGeometry.js';
+  import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js';
+
+  type ParticleModel = {
+    name: string;
+    points: Float32Array;
+  };
+
+  const container = document.querySelector<HTMLElement>('[data-particle-background]');
+  const canvas = container?.querySelector<HTMLCanvasElement>('[data-particle-canvas]');
+
+  if (container && canvas) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const compact = window.innerWidth < 760;
+    const pointCount = compact ? 5200 : 9000;
+    let frameId = 0;
+    let disposed = false;
+
+    const loadPointModel = async (name: string, url: string): Promise<ParticleModel> => {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`Unable to load ${name}: ${response.status}`);
+      }
+
+      const source = new Float32Array(await response.arrayBuffer());
+      const points = new Float32Array(pointCount * 3);
+      points.set(source.subarray(0, points.length));
+      return { name, points };
+    };
+
+    const sampleGeometry = (name: string, geometry: THREE.BufferGeometry): ParticleModel => {
+      geometry.computeVertexNormals();
+      const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial());
+      mesh.updateMatrixWorld(true);
+
+      const sampler = new MeshSurfaceSampler(mesh).build();
+      const point = new THREE.Vector3();
+      const points = new Float32Array(pointCount * 3);
+      const bounds = new THREE.Box3();
+
+      for (let index = 0; index < pointCount; index += 1) {
+        sampler.sample(point);
+        const offset = index * 3;
+        points[offset] = point.x;
+        points[offset + 1] = point.y;
+        points[offset + 2] = point.z;
+        bounds.expandByPoint(point);
+      }
+
+      const center = bounds.getCenter(new THREE.Vector3());
+      const size = bounds.getSize(new THREE.Vector3());
+      const scale = 2.25 / Math.max(size.x, size.y, size.z);
+
+      for (let index = 0; index < points.length; index += 3) {
+        points[index] = (points[index] - center.x) * scale;
+        points[index + 1] = (points[index + 1] - center.y) * scale;
+        points[index + 2] = (points[index + 2] - center.z) * scale;
+      }
+
+      geometry.dispose();
+      mesh.material.dispose();
+      return { name, points };
+    };
+
+    const createProceduralModels = (): ParticleModel[] => [
+      sampleGeometry(
+        'Utah Teapot',
+        new TeapotGeometry(1, compact ? 5 : 7, true, true, true, true, true),
+      ),
+      sampleGeometry(
+        'Torus Knot',
+        new THREE.TorusKnotGeometry(0.82, 0.28, compact ? 96 : 160, compact ? 12 : 20, 2, 3),
+      ),
+    ];
+
+    const start = async () => {
+      let renderer: THREE.WebGLRenderer;
+
+      try {
+        renderer = new THREE.WebGLRenderer({
+          canvas,
+          alpha: true,
+          antialias: false,
+          powerPreference: 'high-performance',
+        });
+      } catch (error) {
+        console.warn('WebGL particle background is unavailable.', error);
+        container.dataset.state = 'unavailable';
+        return;
+      }
+
+      renderer.setClearColor(0x000000, 0);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, compact ? 1.25 : 1.5));
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 20);
+      camera.position.z = 5;
+
+      const proceduralModels = createProceduralModels();
+      let scannedModels: ParticleModel[] = [];
+
+      try {
+        scannedModels = await Promise.all([
+          loadPointModel('Stanford Bunny', '/models/stanford-bunny.bin'),
+          loadPointModel('Stanford Armadillo', '/models/stanford-armadillo.bin'),
+        ]);
+      } catch (error) {
+        console.warn('Stanford particle models could not be loaded.', error);
+      }
+
+      if (disposed) {
+        renderer.dispose();
+        return;
+      }
+
+      const models = [...scannedModels, ...proceduralModels];
+
+      if (models.length === 0) {
+        renderer.dispose();
+        return;
+      }
+
+      const currentPoints = new Float32Array(models[0].points);
+      const firstTarget = models[1] ?? models[0];
+      const targetPoints = new Float32Array(firstTarget.points);
+      const seeds = new Float32Array(pointCount);
+
+      for (let index = 0; index < pointCount; index += 1) {
+        seeds[index] = Math.random();
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      const positionAttribute = new THREE.BufferAttribute(currentPoints, 3);
+      const targetAttribute = new THREE.BufferAttribute(targetPoints, 3);
+      geometry.setAttribute('position', positionAttribute);
+      geometry.setAttribute('aTarget', targetAttribute);
+      geometry.setAttribute('aSeed', new THREE.BufferAttribute(seeds, 1));
+
+      const uniforms = {
+        uTime: { value: 0 },
+        uMorph: { value: 0 },
+        uPointer: { value: new THREE.Vector2(100, 100) },
+        uPointerStrength: { value: 0 },
+        uPixelRatio: { value: renderer.getPixelRatio() },
+        uPointSize: { value: compact ? 4.2 : 4.6 },
+      };
+
+      const material = new THREE.ShaderMaterial({
+        uniforms,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.NormalBlending,
+        vertexShader: `
+          uniform float uTime;
+          uniform float uMorph;
+          uniform vec2 uPointer;
+          uniform float uPointerStrength;
+          uniform float uPixelRatio;
+          uniform float uPointSize;
+          attribute vec3 aTarget;
+          attribute float aSeed;
+          varying float vSeed;
+          varying float vDepth;
+
+          void main() {
+            float easedMorph = uMorph * uMorph * (3.0 - 2.0 * uMorph);
+            vec3 transformed = mix(position, aTarget, easedMorph);
+            transformed += normalize(transformed + vec3(0.0001))
+              * sin(uTime * 0.72 + aSeed * 12.0) * 0.012;
+
+            vec2 pointerDelta = transformed.xy - uPointer;
+            float pointerDistance = length(pointerDelta);
+            float pointerInfluence = smoothstep(0.72, 0.0, pointerDistance) * uPointerStrength;
+            transformed.xy += normalize(pointerDelta + vec2(0.0001)) * pointerInfluence * 0.28;
+            transformed.z += pointerInfluence * (aSeed - 0.5) * 0.34;
+
+            vec4 modelViewPosition = modelViewMatrix * vec4(transformed, 1.0);
+            gl_Position = projectionMatrix * modelViewPosition;
+            gl_PointSize = uPointSize * uPixelRatio * (3.0 / -modelViewPosition.z)
+              * (0.72 + aSeed * 0.56);
+
+            vSeed = aSeed;
+            vDepth = clamp(1.0 - (-modelViewPosition.z - 3.8) / 3.2, 0.35, 1.0);
+          }
+        `,
+        fragmentShader: `
+          varying float vSeed;
+          varying float vDepth;
+
+          void main() {
+            float distanceToCenter = length(gl_PointCoord - vec2(0.5));
+            float alpha = smoothstep(0.5, 0.12, distanceToCenter) * (0.42 + vDepth * 0.42);
+            vec3 cyan = vec3(0.404, 0.831, 1.0);
+            vec3 mint = vec3(0.655, 0.953, 0.816);
+            vec3 color = mix(cyan, mint, smoothstep(0.18, 0.88, vSeed));
+            gl_FragColor = vec4(color, alpha);
+          }
+        `,
+      });
+
+      const particles = new THREE.Points(geometry, material);
+      const particleGroup = new THREE.Group();
+      particleGroup.add(particles);
+      scene.add(particleGroup);
+
+      const pointerNdc = new THREE.Vector2();
+      const pointerWorld = new THREE.Vector3();
+      let pointerStrengthTarget = 0;
+      let currentModelIndex = 0;
+      let targetModelIndex = models.length > 1 ? 1 : 0;
+      let morphStartedAt = 0;
+      let nextMorphAt = 2.2;
+      let morphing = false;
+      let visible = !document.hidden;
+
+      const updateLayout = () => {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const isNarrow = width < 760;
+
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, isNarrow ? 1.25 : 1.5));
+        renderer.setSize(width, height, false);
+        uniforms.uPixelRatio.value = renderer.getPixelRatio();
+
+        const visibleHeight = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
+        const visibleWidth = visibleHeight * camera.aspect;
+        particleGroup.position.x = isNarrow ? 0.3 : Math.min(1.8, visibleWidth * 0.2);
+        particleGroup.position.y = isNarrow ? -0.28 : 0.06;
+        particleGroup.scale.setScalar(isNarrow ? 0.86 : 1.08);
+      };
+
+      const updatePointer = (event: PointerEvent) => {
+        if (event.pointerType === 'touch') return;
+
+        pointerNdc.set(
+          (event.clientX / window.innerWidth) * 2 - 1,
+          -(event.clientY / window.innerHeight) * 2 + 1,
+        );
+        pointerWorld.set(pointerNdc.x, pointerNdc.y, 0.5).unproject(camera);
+        pointerWorld.sub(camera.position).normalize();
+        const distance = -camera.position.z / pointerWorld.z;
+        pointerWorld.multiplyScalar(distance).add(camera.position);
+        uniforms.uPointer.value.set(
+          pointerWorld.x - particleGroup.position.x,
+          pointerWorld.y - particleGroup.position.y,
+        );
+        pointerStrengthTarget = 1;
+        canvas.dataset.interactive = 'true';
+      };
+
+      const clearPointer = () => {
+        pointerStrengthTarget = 0;
+      };
+
+      const updateVisibility = () => {
+        visible = !document.hidden;
+
+        if (visible && !reducedMotion && frameId === 0) {
+          frameId = requestAnimationFrame(renderFrame);
+        }
+      };
+
+      const clock = new THREE.Clock();
+
+      const renderFrame = () => {
+        frameId = 0;
+        if (disposed || !visible) return;
+
+        const elapsed = clock.getElapsedTime();
+        uniforms.uTime.value = elapsed;
+        uniforms.uPointerStrength.value = THREE.MathUtils.lerp(
+          uniforms.uPointerStrength.value,
+          pointerStrengthTarget,
+          0.08,
+        );
+
+        if (!morphing && elapsed >= nextMorphAt && models.length > 1) {
+          morphing = true;
+          morphStartedAt = elapsed;
+          targetAttribute.array.set(models[targetModelIndex].points);
+          targetAttribute.needsUpdate = true;
+          canvas.dataset.nextShape = models[targetModelIndex].name;
+        }
+
+        if (morphing) {
+          const progress = Math.min((elapsed - morphStartedAt) / 2.8, 1);
+          uniforms.uMorph.value = progress;
+
+          if (progress >= 1) {
+            positionAttribute.array.set(models[targetModelIndex].points);
+            positionAttribute.needsUpdate = true;
+            uniforms.uMorph.value = 0;
+            currentModelIndex = targetModelIndex;
+            targetModelIndex = (targetModelIndex + 1) % models.length;
+            morphing = false;
+            nextMorphAt = elapsed + 4.8;
+            canvas.dataset.shape = models[currentModelIndex].name;
+          }
+        }
+
+        particleGroup.rotation.y = Math.sin(elapsed * 0.18) * 0.16 + pointerNdc.x * 0.045;
+        particleGroup.rotation.x = -0.035 + Math.sin(elapsed * 0.12) * 0.025 + pointerNdc.y * 0.025;
+        renderer.render(scene, camera);
+        frameId = requestAnimationFrame(renderFrame);
+      };
+
+      const cleanup = () => {
+        if (disposed) return;
+        disposed = true;
+        cancelAnimationFrame(frameId);
+        window.removeEventListener('resize', updateLayout);
+        window.removeEventListener('pointermove', updatePointer);
+        document.documentElement.removeEventListener('mouseleave', clearPointer);
+        document.removeEventListener('visibilitychange', updateVisibility);
+        geometry.dispose();
+        material.dispose();
+        renderer.dispose();
+      };
+
+      updateLayout();
+      canvas.dataset.shape = models[0].name;
+      canvas.dataset.nextShape = firstTarget.name;
+      container.dataset.state = 'ready';
+
+      window.addEventListener('resize', updateLayout, { passive: true });
+      window.addEventListener('pointermove', updatePointer, { passive: true });
+      document.documentElement.addEventListener('mouseleave', clearPointer);
+      document.addEventListener('visibilitychange', updateVisibility);
+      document.addEventListener('astro:before-swap', cleanup, { once: true });
+
+      if (reducedMotion) {
+        renderer.render(scene, camera);
+      } else {
+        frameId = requestAnimationFrame(renderFrame);
+      }
+    };
+
+    start();
+  }
+</script>
+
+<style>
+  .particle-background {
+    position: fixed;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .particle-background::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(16, 18, 20, 0.92) 0%,
+      rgba(16, 18, 20, 0.68) 43%,
+      rgba(16, 18, 20, 0.18) 78%,
+      rgba(16, 18, 20, 0.46) 100%
+    );
+    content: '';
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0;
+    transition: opacity 700ms ease;
+  }
+
+  [data-state='ready'] canvas {
+    opacity: 0.72;
+  }
+
+  @media (max-width: 760px) {
+    .particle-background::after {
+      background: linear-gradient(
+        180deg,
+        rgba(16, 18, 20, 0.72) 0%,
+        rgba(16, 18, 20, 0.88) 58%,
+        rgba(16, 18, 20, 0.96) 100%
+      );
+    }
+
+    [data-state='ready'] canvas {
+      opacity: 0.48;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    canvas {
+      transition: none;
+    }
+  }
+</style>

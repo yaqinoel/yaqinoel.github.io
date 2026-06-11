@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.astro';
+import ParticleBackground from '../components/ParticleBackground.astro';
 import { defaultLang, isLang, type Lang } from '../i18n/languages';
 import { useTranslations } from '../i18n/ui';
 
@@ -7,12 +8,14 @@ type Props = {
   title?: string;
   description?: string;
   lang?: Lang;
+  particleBackground?: boolean;
 };
 
 const lang = Astro.props.lang ?? (isLang(Astro.params.lang) ? Astro.params.lang : defaultLang);
 const t = useTranslations(lang);
 const title = Astro.props.title ?? t('siteTitle');
 const description = Astro.props.description ?? t('heroSummary');
+const particleBackground = Astro.props.particleBackground ?? false;
 ---
 
 <!doctype html>
@@ -27,6 +30,7 @@ const description = Astro.props.description ?? t('heroSummary');
     <title>{title}</title>
   </head>
   <body>
+    {particleBackground && <ParticleBackground />}
     <Header lang={lang} />
     <main>
       <slot />
@@ -60,6 +64,7 @@ const description = Astro.props.description ?? t('heroSummary');
   }
 
   body {
+    position: relative;
     margin: 0;
     min-height: 100vh;
     background:
@@ -73,9 +78,16 @@ const description = Astro.props.description ?? t('heroSummary');
   }
 
   main {
+    position: relative;
+    z-index: 1;
     width: min(100%, var(--max));
     margin: 0 auto;
     padding: 56px 24px 80px;
+  }
+
+  body > header {
+    position: relative;
+    z-index: 2;
   }
 
   h1,
