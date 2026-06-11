@@ -27,7 +27,7 @@ export type Project = {
   image?: ProjectImage;
   images?: ProjectImage[];
   video?: {
-    webm: string;
+    webm?: string;
     mp4?: string;
     poster?: string;
     caption?: LocalizedText;
@@ -266,23 +266,159 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    slug: 'educational-game-engine',
+    slug: 'physicraft-game-engine',
     title: {
-      en: 'Educational Game Engine',
-      fr: 'Moteur de jeux pédagogique',
-      zh: '课程游戏引擎项目',
+      en: 'Physicraft - 3D Voxel Game Engine',
+      fr: 'Physicraft - Moteur de jeu voxel 3D',
+      zh: 'Physicraft - 3D 体素游戏引擎',
     },
     category: {
-      en: 'Group coursework project',
-      fr: 'Projet de groupe',
-      zh: '小组课程项目',
+      en: 'Game engine course group project',
+      fr: 'Projet de groupe du cours de moteur de jeu',
+      zh: '游戏引擎课程小组项目',
     },
     summary: {
-      en: 'A basic game engine including a scene tree, procedural generation, physics simulation and rendering. My contributions focused on collision handling, physics response, forward rendering, shadow mapping, material management, shader management and PBR rendering.',
-      fr: 'Un moteur de jeux de base avec arbre de scène, génération procédurale, simulation physique et rendu. Mes contributions portent sur les collisions, la réponse physique, le rendu forward, le shadow mapping, la gestion des matériaux, des shaders et le rendu PBR.',
-      zh: '一个基础游戏引擎项目，包括场景树、程序化生成、物理模拟和渲染。我主要负责碰撞检测、物理响应、前向渲染、shadow mapping、材质管理、shader 管理和 PBR 渲染。',
+      en: 'Physicraft is a group project developed for a game engine course using C++17 and OpenGL. Its playable voxel-world demo combines procedural terrain, block interactions, PBR rendering and a custom rigid-body physics engine. I was primarily responsible for the rendering and physics systems.',
+      fr: 'Physicraft est un projet de groupe réalisé dans le cadre d’un cours de moteur de jeu avec C++17 et OpenGL. Sa démonstration jouable dans un monde voxel combine terrain procédural, interactions avec les blocs, rendu PBR et moteur physique de corps rigides. J’étais principalement responsable des systèmes de rendu et de physique.',
+      zh: 'Physicraft 是一个使用 C++17 和 OpenGL 开发的游戏引擎课程小组项目。其可交互体素世界演示结合了程序化地形、方块交互、PBR 渲染和自研刚体物理引擎。我主要负责渲染系统与物理引擎。',
     },
-    tags: ['C++', 'OpenGL', 'PBR', 'Shadow Mapping', 'Physics'],
+    tags: ['C++17', 'OpenGL', 'GLSL', 'PBR', 'Rigid-Body Physics', 'Voxel Engine'],
+    repositoryUrl: 'https://github.com/yaqinoel/HAI819I-Moteur-de-jeux',
+    demoUrl:
+      'https://github.com/yaqinoel/HAI819I-Moteur-de-jeux/blob/main/rapport/videos/demo_mid_quality.mp4',
+    sourceNote: {
+      en: 'For the complete architecture, implementation details, controls and build instructions, see the source code repository.',
+      fr: 'Pour consulter l’architecture complète, les détails d’implémentation, les commandes et les instructions de compilation, voir le dépôt du code source.',
+      zh: '完整的引擎架构、实现细节、操作方式和编译说明可在源码仓库中查看。',
+    },
+    coverImage: {
+      src: '/media/projects/physicraft/poster.jpg',
+      alt: {
+        en: 'Physicraft voxel-world gameplay',
+        fr: 'Démonstration du monde voxel de Physicraft',
+        zh: 'Physicraft 体素世界演示画面',
+      },
+    },
+    video: {
+      mp4: '/media/projects/physicraft/demo.mp4',
+      poster: '/media/projects/physicraft/poster.jpg',
+      caption: {
+        en: 'Gameplay demo combining procedural voxel terrain, block interactions, PBR materials and rigid-body physics.',
+        fr: 'Démonstration jouable combinant terrain voxel procédural, interactions avec les blocs, matériaux PBR et physique des corps rigides.',
+        zh: '项目演示：程序化体素地形、方块交互、PBR 材质与刚体物理模拟。',
+      },
+    },
+    images: [
+      {
+        src: 'https://raw.githubusercontent.com/yaqinoel/HAI819I-Moteur-de-jeux/main/rapport/figures/cube_pbr_gold_IBL.png',
+        alt: {
+          en: 'Gold PBR material reflecting the HDR environment',
+          fr: 'Matériau PBR doré reflétant l’environnement HDR',
+          zh: '反射 HDR 环境的金属 PBR 材质',
+        },
+        caption: {
+          en: 'Cook-Torrance PBR material with image-based lighting and environment reflections.',
+          fr: 'Matériau PBR Cook-Torrance avec éclairage basé sur l’image et réflexions de l’environnement.',
+          zh: '使用基于图像的光照与环境反射的 Cook-Torrance PBR 材质。',
+        },
+      },
+      {
+        src: 'https://raw.githubusercontent.com/yaqinoel/HAI819I-Moteur-de-jeux/main/rapport/figures/shadow_mapping.png',
+        alt: {
+          en: 'Directional-light shadow mapping in the voxel scene',
+          fr: 'Shadow mapping d’une lumière directionnelle dans la scène voxel',
+          zh: '体素场景中的方向光阴影映射',
+        },
+        caption: {
+          en: 'Directional-light shadow mapping integrated into the forward rendering pipeline.',
+          fr: 'Shadow mapping d’une lumière directionnelle intégré au pipeline de rendu forward.',
+          zh: '集成到前向渲染管线中的方向光 Shadow Mapping。',
+        },
+      },
+      {
+        src: 'https://raw.githubusercontent.com/yaqinoel/HAI819I-Moteur-de-jeux/main/rapport/figures/physique_cube_voxel_collision.png',
+        alt: {
+          en: 'Collision between a rigid cube and a voxel structure',
+          fr: 'Collision entre un cube rigide et une structure voxel',
+          zh: '刚体立方体与体素结构之间的碰撞',
+        },
+        caption: {
+          en: 'Cube-voxel collision handled by the custom broad phase, narrow phase and impulse solver.',
+          fr: 'Collision cube-voxel traitée par la broad phase, la narrow phase et le solveur d’impulsions développés pour le moteur.',
+          zh: '通过自研粗阶段、窄阶段碰撞检测与冲量求解器处理的 cube–voxel 碰撞。',
+        },
+      },
+    ],
+    sections: [
+      {
+        title: {
+          en: 'What the team built',
+          fr: 'Ce que l’équipe a réalisé',
+          zh: '小组实现的内容',
+        },
+        items: [
+          {
+            en: 'A Godot-inspired scene graph with hierarchical nodes, local/world transforms and a fixed-step main loop.',
+            fr: 'Un graphe de scène inspiré de Godot avec nœuds hiérarchiques, transformations locales/globales et boucle principale à pas fixe.',
+            zh: '受 Godot 启发的场景树，支持层级节点、局部/世界变换与固定时间步主循环。',
+          },
+          {
+            en: 'Chunk-based procedural voxel terrain, first-person controls, inventory and block placement/removal.',
+            fr: 'Un terrain voxel procédural organisé en chunks, avec contrôles à la première personne, inventaire et ajout/suppression de blocs.',
+            zh: '基于区块的程序化体素地形、第一人称控制、物品栏和方块放置/移除。',
+          },
+          {
+            en: 'A real-time rendering stack with classic and PBR materials, HDR skybox, image-based lighting and shadows.',
+            fr: 'Une chaîne de rendu temps réel avec matériaux classiques et PBR, skybox HDR, éclairage basé sur l’image et ombres.',
+            zh: '包含经典/PBR 材质、HDR 天空盒、基于图像的光照与阴影的实时渲染系统。',
+          },
+          {
+            en: 'A custom rigid-body simulation supporting cubes, spheres, capsules, triangle meshes, voxel structures and voxel terrain.',
+            fr: 'Une simulation personnalisée de corps rigides prenant en charge cubes, sphères, capsules, maillages triangulaires, structures voxel et terrain voxel.',
+            zh: '自研刚体模拟系统，支持立方体、球体、胶囊体、三角网格、体素结构和体素地形。',
+          },
+        ],
+      },
+      {
+        title: {
+          en: 'My contributions',
+          fr: 'Mes contributions',
+          zh: '我负责的内容',
+        },
+        items: [
+          {
+            en: 'Designed the RenderSystem and forward rendering architecture, including explicit depth, color, skybox and GUI passes.',
+            fr: 'Conception du RenderSystem et de l’architecture de rendu forward, avec passes explicites pour la profondeur, la couleur, la skybox et l’interface.',
+            zh: '设计 RenderSystem 与前向渲染架构，划分深度、颜色、天空盒和 GUI 等渲染阶段。',
+          },
+          {
+            en: 'Implemented Cook-Torrance PBR materials, reusable material management, HDR image-based lighting and directional shadow mapping.',
+            fr: 'Implémentation des matériaux PBR Cook-Torrance, de la gestion réutilisable des matériaux, de l’IBL HDR et du shadow mapping directionnel.',
+            zh: '实现 Cook-Torrance PBR 材质、可复用材质管理、HDR IBL 和方向光 Shadow Mapping。',
+          },
+          {
+            en: 'Redesigned the physics architecture around fixed-step rigid bodies, colliders, collision shapes, contact caching and an impulse solver.',
+            fr: 'Refonte de l’architecture physique autour de corps rigides à pas fixe, colliders, formes de collision, cache de contacts et solveur d’impulsions.',
+            zh: '重构固定时间步刚体、碰撞体、碰撞形状、接触缓存和冲量求解器组成的物理架构。',
+          },
+          {
+            en: 'Implemented Sweep and Prune broad-phase detection, shape-specific narrow-phase tests and stable reduced contact manifolds.',
+            fr: 'Implémentation de la broad phase Sweep and Prune, des tests de narrow phase propres aux formes et de variétés de contacts réduites et stables.',
+            zh: '实现 Sweep and Prune 粗阶段、针对不同形状的窄阶段检测以及稳定的精简接触流形。',
+          },
+          {
+            en: 'Developed voxel-aware collision handling and dynamic updates of mass, center of mass, inertia, collider data and generated meshes.',
+            fr: 'Développement des collisions adaptées aux voxels et de la mise à jour dynamique de la masse, du centre de masse, de l’inertie, des colliders et des maillages générés.',
+            zh: '实现体素专用碰撞处理，以及质量、质心、惯性、碰撞数据和生成网格的动态更新。',
+          },
+          {
+            en: 'Improved contact stability with friction, restitution, cached impulses, positional correction, sleeping and micro-bounce damping.',
+            fr: 'Amélioration de la stabilité des contacts avec friction, restitution, impulsions mises en cache, correction de position, mise en sommeil et réduction des micro-rebonds.',
+            zh: '通过摩擦、恢复系数、冲量缓存、位置修正、休眠机制和微反弹抑制提升接触稳定性。',
+          },
+        ],
+      },
+    ],
     featured: true,
   },
   {
