@@ -282,7 +282,7 @@ export const projects: Project[] = [
       fr: 'Physicraft est un projet de groupe réalisé dans le cadre d’un cours de moteur de jeu avec C++17 et OpenGL. Sa démonstration jouable dans un monde voxel combine terrain procédural, interactions avec les blocs, rendu PBR et moteur physique de corps rigides. J’étais principalement responsable des systèmes de rendu et de physique.',
       zh: 'Physicraft 是一个使用 C++17 和 OpenGL 开发的游戏引擎课程小组项目。其可交互体素世界演示结合了程序化地形、方块交互、PBR 渲染和自研刚体物理引擎。我主要负责渲染系统与物理引擎。',
     },
-    tags: ['C++17', 'OpenGL', 'GLSL', 'PBR', 'Rigid-Body Physics', 'Voxel Engine'],
+    tags: ['C++', 'OpenGL', 'GLSL', 'PBR', 'Rigid-Body Physics', 'Game Engine', 'Procedural Generation'],
     repositoryUrl: 'https://github.com/yaqinoel/HAI819I-Moteur-de-jeux',
     demoUrl:
       'https://github.com/yaqinoel/HAI819I-Moteur-de-jeux/blob/main/rapport/videos/demo_mid_quality.mp4',
@@ -419,46 +419,6 @@ export const projects: Project[] = [
         ],
       },
     ],
-    featured: true,
-  },
-  {
-    slug: 'color-harmonisation',
-    title: {
-      en: 'Color Harmonisation Paper Reproduction',
-      fr: 'Reproduction d’un article sur l’harmonisation des couleurs',
-      zh: 'Color Harmonisation 论文复现',
-    },
-    category: {
-      en: 'Image processing group project',
-      fr: 'Projet de traitement d’images',
-      zh: '图像处理课程小组项目',
-    },
-    summary: {
-      en: 'A course project reproducing an algorithm from a color harmonisation paper, focused on implementing and evaluating the image processing method.',
-      fr: 'Un projet de cours reproduisant un algorithme issu d’un article sur l’harmonisation des couleurs, avec implémentation et évaluation de la méthode.',
-      zh: '一个图像处理课程项目，围绕 Color Harmonisation 论文中的算法进行复现、实现和结果分析。',
-    },
-    tags: ['Image Processing', 'Paper Reproduction', 'Python'],
-    featured: true,
-  },
-  {
-    slug: 'vr-navigation-evaluation',
-    title: {
-      en: 'VR Spatial Navigation Assessment System',
-      fr: 'Système VR d’évaluation de la navigation spatiale',
-      zh: 'VR 空间导航评估系统',
-    },
-    category: {
-      en: 'Research lab experience',
-      fr: 'Expérience en laboratoire',
-      zh: '实验室经历',
-    },
-    summary: {
-      en: 'A Unity and OpenXR-based virtual reality assessment system for spatial navigation, developed in collaboration with psychology researchers and deployed with Oculus Quest devices.',
-      fr: 'Un système d’évaluation en réalité virtuelle basé sur Unity et OpenXR pour la navigation spatiale, développé avec des chercheurs en psychologie et utilisé avec des casques Oculus Quest.',
-      zh: '一个基于 Unity 和 OpenXR 的空间导航能力 VR 评估系统，与心理学研究团队合作开发，并集成 Oculus Quest 设备。',
-    },
-    tags: ['Unity', 'OpenXR', 'Oculus Quest', 'Blender', 'VR'],
     featured: true,
   },
   {
