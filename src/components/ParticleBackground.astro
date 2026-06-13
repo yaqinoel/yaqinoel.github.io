@@ -1,4 +1,9 @@
-<div class="particle-background" data-particle-background aria-hidden="true">
+<div
+  class="particle-background"
+  data-particle-background
+  aria-hidden="true"
+  transition:persist="particle-background"
+>
   <canvas data-particle-canvas></canvas>
 </div>
 
@@ -316,6 +321,8 @@
       let scrollSmooth = window.scrollY;
       let visibleHeight = 1;
       let visible = !document.hidden;
+      let navigationTurnStartedAt = Number.NEGATIVE_INFINITY;
+      let navigationTurnDirection = 1;
 
       const updateLayout = () => {
         const width = window.innerWidth;
@@ -375,6 +382,13 @@
         }
       };
 
+      const startNavigationTurn = () => {
+        if (reducedMotion) return;
+        navigationTurnStartedAt = Date.now();
+        navigationTurnDirection *= -1;
+        canvas.dataset.navigationTurn = 'active';
+      };
+
       const startedAt = Date.now();
 
       const renderFrame = () => {
@@ -386,18 +400,38 @@
         pointerWorldSmooth.lerp(pointerWorldTarget, 0.085);
         scrollSmooth = THREE.MathUtils.lerp(scrollSmooth, scrollTarget, 0.075);
 
+        const navigationProgress = Math.min(
+          Math.max((Date.now() - navigationTurnStartedAt) / 900, 0),
+          1,
+        );
+        const navigationEnvelope = navigationProgress < 1
+          ? Math.sin(navigationProgress * Math.PI)
+          : 0;
+        const navigationAngle = navigationEnvelope * navigationTurnDirection * 0.76;
+
+        if (navigationProgress >= 1 && canvas.dataset.navigationTurn === 'active') {
+          canvas.dataset.navigationTurn = 'idle';
+        }
+
         camera.position.x = THREE.MathUtils.lerp(
           camera.position.x,
-          pointerNdcSmooth.x * (compact ? 0.26 : 0.58),
-          0.065,
+          pointerNdcSmooth.x * (compact ? 0.26 : 0.58)
+            + Math.sin(navigationAngle) * (compact ? 0.62 : 1.18),
+          navigationEnvelope > 0 ? 0.18 : 0.065,
         );
         camera.position.y = THREE.MathUtils.lerp(
           camera.position.y,
           pointerNdcSmooth.y * (compact ? 0.18 : 0.36),
           0.065,
         );
+        camera.position.z = THREE.MathUtils.lerp(
+          camera.position.z,
+          5 - (1 - Math.cos(navigationAngle)) * (compact ? 0.28 : 0.5),
+          navigationEnvelope > 0 ? 0.18 : 0.08,
+        );
         camera.lookAt(
-          -pointerNdcSmooth.x * (compact ? 0.05 : 0.13),
+          -pointerNdcSmooth.x * (compact ? 0.05 : 0.13)
+            + Math.sin(navigationAngle) * (compact ? 0.08 : 0.18),
           -pointerNdcSmooth.y * (compact ? 0.035 : 0.085),
           0,
         );
@@ -478,6 +512,7 @@
         window.removeEventListener('scroll', updateScroll);
         document.documentElement.removeEventListener('mouseleave', clearPointer);
         document.removeEventListener('visibilitychange', updateVisibility);
+        document.removeEventListener('astro:before-preparation', startNavigationTurn);
         clouds.forEach((cloud) => {
           cloud.geometry.dispose();
           cloud.material.dispose();
@@ -491,6 +526,7 @@
       canvas.dataset.particles = String(clouds.length * pointsPerCloud);
       canvas.dataset.models = models.map((model) => model.name).join(', ');
       canvas.dataset.scroll = String(Math.round(scrollTarget));
+      canvas.dataset.navigationTurn = 'idle';
 
       window.addEventListener('resize', updateLayout, { passive: true });
       window.addEventListener('pointermove', updatePointer, { passive: true });
@@ -500,7 +536,8 @@
       window.addEventListener('scroll', updateScroll, { passive: true });
       document.documentElement.addEventListener('mouseleave', clearPointer);
       document.addEventListener('visibilitychange', updateVisibility);
-      document.addEventListener('astro:before-swap', cleanup, { once: true });
+      document.addEventListener('astro:before-preparation', startNavigationTurn);
+      window.addEventListener('pagehide', cleanup, { once: true });
 
       if (reducedMotion) {
         renderer.render(scene, camera);

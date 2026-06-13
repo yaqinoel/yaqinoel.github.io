@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import ParticleBackground from '../components/ParticleBackground.astro';
+import { ClientRouter } from 'astro:transitions';
 import { defaultLang, isLang, type Lang } from '../i18n/languages';
 import { useTranslations } from '../i18n/ui';
 
@@ -15,7 +16,7 @@ const lang = Astro.props.lang ?? (isLang(Astro.params.lang) ? Astro.params.lang 
 const t = useTranslations(lang);
 const title = Astro.props.title ?? t('siteTitle');
 const description = Astro.props.description ?? t('heroSummary');
-const particleBackground = Astro.props.particleBackground ?? false;
+const particleBackground = Astro.props.particleBackground ?? true;
 ---
 
 <!doctype html>
@@ -28,11 +29,12 @@ const particleBackground = Astro.props.particleBackground ?? false;
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <ClientRouter />
   </head>
   <body>
     {particleBackground && <ParticleBackground />}
     <Header lang={lang} />
-    <main>
+    <main transition:animate="slide">
       <slot />
     </main>
   </body>
@@ -88,6 +90,35 @@ const particleBackground = Astro.props.particleBackground ?? false;
   body > header {
     position: relative;
     z-index: 2;
+  }
+
+  ::view-transition-old(root) {
+    animation: 220ms ease both page-fade-out;
+  }
+
+  ::view-transition-new(root) {
+    animation: 420ms cubic-bezier(0.22, 1, 0.36, 1) both page-fade-in;
+  }
+
+  @keyframes page-fade-out {
+    to {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  @keyframes page-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 1ms;
+    }
   }
 
   h1,
