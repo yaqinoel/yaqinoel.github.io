@@ -278,9 +278,9 @@ export const projects: Project[] = [
       zh: '游戏引擎课程小组项目',
     },
     summary: {
-      en: 'Physicraft is a group project developed for a game engine course using C++17 and OpenGL. Its playable voxel-world demo combines procedural terrain, block interactions, PBR rendering and a custom rigid-body physics engine. I was primarily responsible for the rendering and physics systems.',
-      fr: 'Physicraft est un projet de groupe réalisé dans le cadre d’un cours de moteur de jeu avec C++17 et OpenGL. Sa démonstration jouable dans un monde voxel combine terrain procédural, interactions avec les blocs, rendu PBR et moteur physique de corps rigides. J’étais principalement responsable des systèmes de rendu et de physique.',
-      zh: 'Physicraft 是一个使用 C++17 和 OpenGL 开发的游戏引擎课程小组项目。其可交互体素世界演示结合了程序化地形、方块交互、PBR 渲染和自研刚体物理引擎。我主要负责渲染系统与物理引擎。',
+      en: 'Physicraft is a group project developed for a game engine course using C++ and OpenGL. Its playable voxel-world demo combines procedural terrain, block interactions, PBR rendering and a custom rigid-body physics engine. I was primarily responsible for the rendering and physics systems.',
+      fr: 'Physicraft est un projet de groupe réalisé dans le cadre d’un cours de moteur de jeu avec C++ et OpenGL. Sa démonstration jouable dans un monde voxel combine terrain procédural, interactions avec les blocs, rendu PBR et moteur physique de corps rigides. J’étais principalement responsable des systèmes de rendu et de physique.',
+      zh: 'Physicraft 是一个使用 C++ 和 OpenGL 开发的游戏引擎课程小组项目。其可交互体素世界演示结合了程序化地形、方块交互、PBR 渲染和自研刚体物理引擎。我主要负责渲染系统与物理引擎。',
     },
     tags: ['C++', 'OpenGL', 'GLSL', 'PBR', 'Rigid-Body Physics', 'Game Engine', 'Procedural Generation'],
     repositoryUrl: 'https://github.com/yaqinoel/HAI819I-Moteur-de-jeux',
