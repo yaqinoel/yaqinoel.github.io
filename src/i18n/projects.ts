@@ -454,14 +454,14 @@ export const projects: Project[] = [
     coverImage: {
       src: '/media/projects/scitweets-ml/cover.png',
       alt: {
-        en: 'SciTweets classification results and preprocessing comparison',
-        fr: 'Résultats de classification SciTweets et comparaison du prétraitement',
-        zh: 'SciTweets 分类结果与预处理对比',
+        en: 'Three-dimensional visualization of the SciTweets feature space',
+        fr: 'Visualisation tridimensionnelle de l’espace de caractéristiques SciTweets',
+        zh: 'SciTweets 特征空间的三维可视化',
       },
       caption: {
-        en: 'Overview of the final classifiers and the preprocessing experiment.',
-        fr: 'Vue d’ensemble des classifieurs finaux et de l’expérience de prétraitement.',
-        zh: '最终分类器与预处理实验概览。',
+        en: 'Three-dimensional projection of tweet representations in the SciTweets classification project.',
+        fr: 'Projection tridimensionnelle des représentations de tweets dans le projet de classification SciTweets.',
+        zh: 'SciTweets 分类项目中推文表示的三维投影。',
       },
     },
     images: [
