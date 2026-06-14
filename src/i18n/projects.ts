@@ -18,6 +18,7 @@ export type Project = {
   slug: string;
   title: LocalizedText;
   summary: LocalizedText;
+  detailSummary?: LocalizedText;
   category: LocalizedText;
   tags: string[];
   repositoryUrl?: string;
@@ -424,21 +425,130 @@ export const projects: Project[] = [
   {
     slug: 'traveling-android-app',
     title: {
-      en: 'Traveling Android App',
-      fr: 'Application Android Traveling',
-      zh: 'Traveling 安卓应用',
+      en: 'Traveling - Travel Sharing & Itinerary Planning',
+      fr: 'Traveling - Partage de voyages et planification d’itinéraires',
+      zh: 'Traveling - 旅行分享与行程规划应用',
     },
     category: {
-      en: 'Android group coursework project',
-      fr: 'Projet Android de groupe',
-      zh: '安卓课程小组项目',
+      en: 'Two-person Android coursework project',
+      fr: 'Projet Android réalisé en binôme',
+      zh: '两人合作的安卓课程项目',
     },
     summary: {
-      en: 'A Kotlin and Firebase Android app for travel photo sharing and trip planning. My work focused on social features including posts, likes, favorites, comments, follows and user management.',
-      fr: 'Une application Android en Kotlin et Firebase pour le partage de photos de voyage et la planification d’itinéraires. J’ai travaillé sur les fonctions sociales comme les publications, les mentions J’aime, les favoris, les commentaires, les abonnements et la gestion des utilisateurs.',
-      zh: '一个使用 Kotlin 和 Firebase 开发的旅行照片分享与行程规划安卓应用。我主要负责照片分享、点赞、收藏、评论、关注、帖子和用户管理等社交功能。',
+      en: 'A Kotlin Android application connecting community travel content with personalized itinerary planning. I was primarily responsible for the TravelShare publishing, discovery and social features.',
+      fr: 'Une application Android en Kotlin reliant les contenus de voyage partagés à la planification personnalisée d’itinéraires. J’étais principalement responsable des fonctions de publication, de découverte et d’interaction de TravelShare.',
+      zh: '一款将用户旅行分享与个性化行程规划结合的 Kotlin 安卓应用。我主要负责 TravelShare 的发布、内容发现和社交互动功能。',
     },
-    tags: ['Kotlin', 'Android', 'Firebase'],
+    detailSummary: {
+      en: 'Traveling was developed collaboratively by two students for the HAI811I Mobile Programming course at the University of Montpellier. This Kotlin Android application connects community travel content with personalized itinerary planning: TravelShare supports publishing, discovering and interacting with travel posts, while TravelPath generates routes from user preferences, budget, time and weather constraints. I was primarily responsible for the TravelShare module.',
+      fr: 'Traveling a été développé en binôme dans le cadre du cours HAI811I Programmation mobile à l’Université de Montpellier. Cette application Android en Kotlin relie les contenus de voyage partagés par les utilisateurs à la planification personnalisée d’itinéraires : TravelShare permet de publier, découvrir et commenter des voyages, tandis que TravelPath génère des parcours selon les préférences, le budget, le temps disponible et la météo. J’étais principalement responsable du module TravelShare.',
+      zh: 'Traveling 是蒙彼利埃大学 HAI811I 移动编程课程中的两人合作项目。这款 Kotlin 安卓应用将用户分享的旅行内容与个性化行程规划连接起来：TravelShare 支持旅行内容的发布、发现与互动，TravelPath 则根据偏好、预算、时间和天气条件生成路线。我主要负责 TravelShare 模块。',
+    },
+    tags: ['Kotlin', 'Jetpack Compose', 'Firebase', 'MVVM', 'Google Maps', 'ML Kit'],
+    repositoryUrl: 'https://github.com/yaqinoel/ProjetMobile-HAI811I',
+    demoUrl: 'https://github.com/yaqinoel/ProjetMobile-HAI811I#demo',
+    sourceNote: {
+      en: 'The repository contains the complete feature list, architecture, Firebase data model and full demonstration video. Firebase configuration files and API keys are intentionally excluded.',
+      fr: 'Le dépôt présente la liste complète des fonctionnalités, l’architecture, le modèle de données Firebase et la vidéo de démonstration intégrale. Les fichiers de configuration Firebase et les clés API sont volontairement exclus.',
+      zh: '源码仓库包含完整功能说明、架构、Firebase 数据模型和完整演示视频。Firebase 配置文件与 API 密钥未包含在公开仓库中。',
+    },
+    coverImage: {
+      src: '/media/projects/traveling/poster.png',
+      alt: {
+        en: 'TravelShare and TravelPath logos for the Traveling Android application',
+        fr: 'Logos TravelShare et TravelPath de l’application Android Traveling',
+        zh: 'Traveling 安卓应用的 TravelShare 与 TravelPath 标志',
+      },
+      caption: {
+        en: 'TravelShare and TravelPath, the two connected modules of Traveling.',
+        fr: 'TravelShare et TravelPath, les deux modules connectés de Traveling.',
+        zh: 'Traveling 中相互连接的 TravelShare 与 TravelPath 两个模块。',
+      },
+    },
+    video: {
+      mp4: '/media/projects/traveling/demo.mp4',
+      poster: '/media/projects/traveling/poster.png',
+      caption: {
+        en: 'Short demonstration of the Traveling Android application. The complete video is available from the Demo link.',
+        fr: 'Courte démonstration de l’application Android Traveling. La vidéo complète est accessible via le lien Démo.',
+        zh: 'Traveling 安卓应用短演示。完整视频可通过 Demo 链接查看。',
+      },
+    },
+    sections: [
+      {
+        title: {
+          en: 'Project highlights',
+          fr: 'Points clés du projet',
+          zh: '项目亮点',
+        },
+        items: [
+          {
+            en: 'TravelShare provides a complete publication workflow with up to 14 photos, metadata, tags, exact or approximate map locations, voice notes, visibility settings and ML Kit image labels.',
+            fr: 'TravelShare propose un flux de publication complet avec jusqu’à 14 photos, métadonnées, tags, localisation exacte ou approximative, notes vocales, visibilité et labels d’image générés avec ML Kit.',
+            zh: 'TravelShare 提供完整发布流程，支持最多 14 张照片、元数据、标签、精确或模糊地图位置、语音备注、可见性设置以及 ML Kit 图像标签。',
+          },
+          {
+            en: 'Travel content can be explored through list, grid and map views with text or voice search, date and category filters, geographic radius filtering and similar-photo discovery.',
+            fr: 'Les contenus peuvent être explorés en liste, grille ou carte, avec recherche textuelle ou vocale, filtres par date, catégorie et rayon géographique, ainsi que recherche de photos similaires.',
+            zh: '旅行内容支持列表、网格和地图浏览，并提供文字或语音搜索、日期与类别筛选、地理半径筛选和相似照片发现。',
+          },
+          {
+            en: 'TravelPath generates route options from destination, activities, budget, duration, effort and weather preferences, then presents ordered stops, maps, estimates and offline-ready saved routes.',
+            fr: 'TravelPath génère des itinéraires selon la destination, les activités, le budget, la durée, l’effort et la météo, puis présente les étapes, la carte, les estimations et les parcours sauvegardés hors ligne.',
+            zh: 'TravelPath 根据目的地、活动、预算、时长、体力与天气偏好生成路线，并展示有序站点、地图、估算信息以及可离线使用的已保存路线。',
+          },
+          {
+            en: 'The bridge between both modules turns shared photo locations into destinations or itinerary candidates and displays related traveler photos for route stops.',
+            fr: 'La passerelle entre les deux modules transforme les lieux partagés en destinations ou candidats d’itinéraire et affiche les photos associées aux étapes.',
+            zh: '两个模块之间的桥接功能可将分享照片的位置转化为目的地或路线候选点，并在行程站点中展示相关旅行照片。',
+          },
+          {
+            en: 'The application uses MVVM, repositories and StateFlow to separate Jetpack Compose interfaces from Firebase, Maps, weather and local-storage services.',
+            fr: 'L’application utilise MVVM, des repositories et StateFlow pour séparer les interfaces Jetpack Compose des services Firebase, cartographiques, météo et de stockage local.',
+            zh: '应用采用 MVVM、Repository 与 StateFlow，将 Jetpack Compose 界面和 Firebase、地图、天气及本地存储服务分离。',
+          },
+        ],
+      },
+      {
+        title: {
+          en: 'My contributions',
+          fr: 'Mes contributions',
+          zh: '我的贡献',
+        },
+        items: [
+          {
+            en: 'Designed and implemented the TravelShare user interfaces and user flows with Jetpack Compose and Material 3.',
+            fr: 'Conception et implémentation des interfaces et parcours utilisateur de TravelShare avec Jetpack Compose et Material 3.',
+            zh: '使用 Jetpack Compose 与 Material 3 设计并实现 TravelShare 的界面和用户流程。',
+          },
+          {
+            en: 'Integrated Firebase data for photo publishing, editing and deletion, media management, public and group visibility, user profiles and personal collections.',
+            fr: 'Intégration des données Firebase pour la publication, la modification et la suppression de photos, la gestion des médias, la visibilité publique ou de groupe, les profils et collections personnelles.',
+            zh: '集成 Firebase 数据，实现照片发布、编辑与删除、媒体管理、公开或群组可见性、用户资料和个人收藏。',
+          },
+          {
+            en: 'Implemented list, grid and map browsing, text and voice search, filters, geographic-radius queries and similar-photo discovery.',
+            fr: 'Implémentation des vues liste, grille et carte, de la recherche textuelle et vocale, des filtres, des requêtes par rayon géographique et de la découverte de photos similaires.',
+            zh: '实现列表、网格和地图浏览，文字与语音搜索、筛选、地理半径查询和相似照片发现。',
+          },
+          {
+            en: 'Developed social interactions including likes, saved posts, comments, reports, author following and separate guest and registered-user behavior.',
+            fr: 'Développement des interactions sociales : mentions J’aime, favoris, commentaires, signalements, abonnements aux auteurs et comportements distincts pour invités et utilisateurs inscrits.',
+            zh: '开发点赞、收藏、评论、举报、关注作者等社交互动，并区分游客与注册用户行为。',
+          },
+          {
+            en: 'Implemented travel groups, configurable notifications, profile customization and location-based actions such as opening directions.',
+            fr: 'Implémentation des groupes de voyage, notifications configurables, personnalisation des profils et actions géolocalisées comme l’ouverture d’un itinéraire.',
+            zh: '实现旅行群组、可配置通知、资料自定义以及打开导航等基于位置的操作。',
+          },
+          {
+            en: 'Contributed to the TravelShare/TravelPath bridge by sending shared locations into route planning and supporting user-contributed destinations and attractions.',
+            fr: 'Contribution à la passerelle TravelShare/TravelPath en transmettant les lieux partagés à la planification et en prenant en charge les destinations et attractions ajoutées par les utilisateurs.',
+            zh: '参与 TravelShare 与 TravelPath 的桥接，将分享地点传入路线规划，并支持用户贡献的目的地和景点。',
+          },
+        ],
+      },
+    ],
   },
 ];
 

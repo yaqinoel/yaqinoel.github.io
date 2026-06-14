@@ -17,17 +17,18 @@ export function getStaticPaths() {
 const lang = isLang(Astro.params.lang) ? Astro.params.lang : defaultLang;
 const { project } = Astro.props;
 const t = useTranslations(lang);
+const projectDescription = project.detailSummary?.[lang] ?? project.summary[lang];
 const resultImages = project.images ?? (project.image ? [project.image] : []);
 const keyHighlightItems = project.sections?.[0]?.items ?? project.highlights;
 const contributionItems = project.sections?.[1]?.items;
 const showImagesWithContributions = Boolean(contributionItems && resultImages.length);
 ---
 
-<Layout lang={lang} title={`${project.title[lang]} | ${profile.name}`} description={project.summary[lang]}>
+<Layout lang={lang} title={`${project.title[lang]} | ${profile.name}`} description={projectDescription}>
   <article class="project-detail">
     <p class="eyebrow">{project.category[lang]}</p>
     <h1>{project.title[lang]}</h1>
-    <p class="summary">{project.summary[lang]}</p>
+    <p class="summary">{projectDescription}</p>
 
     {
       project.video && (
@@ -131,10 +132,12 @@ const showImagesWithContributions = Boolean(contributionItems && resultImages.le
 
   video {
     width: 100%;
+    max-height: 75vh;
     display: block;
     border: 1px solid var(--line);
     border-radius: 8px;
     background: #000;
+    object-fit: contain;
   }
 
   figcaption {
