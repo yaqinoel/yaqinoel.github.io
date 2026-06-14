@@ -423,6 +423,131 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    slug: 'scitweets-machine-learning',
+    title: {
+      en: 'SciTweets Scientific Discourse Classification',
+      fr: 'Classification du discours scientifique dans SciTweets',
+      zh: 'SciTweets 科学话语分类',
+    },
+    category: {
+      en: 'Machine learning group coursework project',
+      fr: 'Projet de groupe en machine learning',
+      zh: '机器学习课程小组项目',
+    },
+    summary: {
+      en: 'An end-to-end supervised machine learning pipeline for classifying scientific discourse in tweets using text preprocessing, TF-IDF features, class balancing and multiple classical classifiers.',
+      fr: 'Un pipeline complet de machine learning supervisé pour classifier le discours scientifique dans des tweets, avec prétraitement du texte, TF-IDF, équilibrage des classes et comparaison de plusieurs classifieurs classiques.',
+      zh: '一个用于识别推文中科学话语的端到端监督学习项目，涵盖文本预处理、TF-IDF 特征、类别平衡和多种传统分类模型比较。',
+    },
+    detailSummary: {
+      en: 'This group project was completed for the introductory HAI817 Machine Learning course in the M1 Computer Science program at the University of Montpellier. Its main purpose was educational: to discover the fundamental stages of a supervised machine learning project through a concrete text-classification problem. Using the SciTweets corpus, we jointly designed and implemented a complete workflow, from data exploration and text preprocessing to model comparison, hyperparameter tuning and error analysis.',
+      fr: 'Ce projet de groupe a été réalisé dans le cadre de l’UE d’introduction HAI817 Machine Learning du Master 1 Informatique de l’Université de Montpellier. Son objectif principal était pédagogique : découvrir les étapes fondamentales d’un projet de machine learning supervisé à travers un problème concret de classification de textes. À partir du corpus SciTweets, nous avons conçu et implémenté collectivement une chaîne complète, de l’exploration et du prétraitement des données jusqu’à la comparaison des modèles, au réglage des hyperparamètres et à l’analyse des erreurs.',
+      zh: '这是蒙彼利埃大学计算机科学硕士一年级 HAI817 机器学习导论课程的小组项目。项目以学习和教学实践为主要目的，通过一个具体的文本分类问题，理解监督机器学习项目的基本阶段。我们基于 SciTweets 语料库，共同设计并实现了从数据探索、文本预处理到模型比较、超参数调优和误差分析的完整流程。',
+    },
+    tags: ['Python', 'Machine Learning', 'NLP', 'TF-IDF', 'scikit-learn', 'SVM', 'NLTK'],
+    repositoryUrl: 'https://github.com/yaqinoel/HAI817I-Projet-MachineLearning',
+    sourceNote: {
+      en: 'The repository contains the complete Jupyter notebook, datasets, report, experimental figures and instructions for reproducing the pipeline.',
+      fr: 'Le dépôt contient le notebook Jupyter complet, les jeux de données, le rapport, les figures expérimentales et les instructions pour reproduire le pipeline.',
+      zh: '源码仓库包含完整的 Jupyter Notebook、数据集、报告、实验图表和流程复现说明。',
+    },
+    coverImage: {
+      src: '/media/projects/scitweets-ml/cover.png',
+      alt: {
+        en: 'SciTweets classification results and preprocessing comparison',
+        fr: 'Résultats de classification SciTweets et comparaison du prétraitement',
+        zh: 'SciTweets 分类结果与预处理对比',
+      },
+      caption: {
+        en: 'Overview of the final classifiers and the preprocessing experiment.',
+        fr: 'Vue d’ensemble des classifieurs finaux et de l’expérience de prétraitement.',
+        zh: '最终分类器与预处理实验概览。',
+      },
+    },
+    images: [
+      {
+        src: '/media/projects/scitweets-ml/distribution_labels.png',
+        alt: {
+          en: 'Distribution of real SciTweets labels used in the project',
+          fr: 'Distribution des labels réels de SciTweets utilisés dans le projet',
+          zh: '项目所使用 SciTweets 真实数据的标签分布',
+        },
+        caption: {
+          en: 'The real dataset is imbalanced across the SCI/NON-SCI task and the scientific sub-labels.',
+          fr: 'Le jeu de données réel est déséquilibré pour la tâche SCI/NON-SCI et les sous-labels scientifiques.',
+          zh: '真实数据在 SCI/NON-SCI 任务和科学子标签之间存在类别不平衡。',
+        },
+      },
+      {
+        src: '/media/projects/scitweets-ml/confusion_matrices.png',
+        alt: {
+          en: 'Confusion matrices for the CLAIM, REF and CONTEXT tweet classifiers',
+          fr: 'Matrices de confusion des classifieurs CLAIM, REF et CONTEXT',
+          zh: 'CLAIM、REF 和 CONTEXT 推文分类器的混淆矩阵',
+        },
+        caption: {
+          en: 'Final confusion matrices for the three binary scientific sub-label classifiers.',
+          fr: 'Matrices de confusion finales des trois classifieurs binaires de sous-labels scientifiques.',
+          zh: '三个科学子标签二分类器的最终混淆矩阵。',
+        },
+      },
+      {
+        src: '/media/projects/scitweets-ml/preprocessing_comparison.png',
+        alt: {
+          en: 'Comparison of text preprocessing pipelines for the SCI versus NON-SCI task',
+          fr: 'Comparaison des pipelines de prétraitement pour la tâche SCI contre NON-SCI',
+          zh: 'SCI 与 NON-SCI 任务的文本预处理流程对比',
+        },
+        caption: {
+          en: 'Keeping stopwords produced the best result on short tweets, reaching 0.8509 accuracy and 0.8287 macro F1.',
+          fr: 'La conservation des stopwords donne le meilleur résultat sur les tweets courts, avec 0,8509 d’accuracy et 0,8287 de F1 macro.',
+          zh: '对于短推文，保留停用词取得最佳结果，准确率为 0.8509，宏平均 F1 为 0.8287。',
+        },
+      },
+    ],
+    sections: [
+      {
+        title: {
+          en: 'Project highlights',
+          fr: 'Points clés du projet',
+          zh: '项目亮点',
+        },
+        items: [
+          {
+            en: 'Studied three related tasks: SCI versus NON-SCI, CLAIM or REF versus CONTEXT for scientific tweets, and mono-label CLAIM versus REF versus CONTEXT classification.',
+            fr: 'Étude de trois tâches liées : SCI contre NON-SCI, CLAIM ou REF contre CONTEXT pour les tweets scientifiques, puis classification mono-label CLAIM contre REF contre CONTEXT.',
+            zh: '研究三个相关任务：SCI 与 NON-SCI 分类、科学推文中的 CLAIM 或 REF 与 CONTEXT 分类，以及 CLAIM、REF、CONTEXT 单标签三分类。',
+          },
+          {
+            en: 'Explored and corrected the corpus, cleaned URLs, mentions, hashtags and special characters, applied lemmatization, and represented tweets with TF-IDF unigrams and bigrams.',
+            fr: 'Exploration et correction du corpus, nettoyage des URLs, mentions, hashtags et caractères spéciaux, lemmatisation, puis représentation TF-IDF avec unigrammes et bigrammes.',
+            zh: '完成语料探索与修正，清理 URL、提及、话题标签和特殊字符，进行词形还原，并使用 TF-IDF unigram 与 bigram 表示推文。',
+          },
+          {
+            en: 'Used 1,140 real SciTweets and 446 synthetic tweets for training-set balancing while keeping the test set exclusively real.',
+            fr: 'Utilisation de 1 140 tweets réels et de 446 tweets synthétiques pour équilibrer uniquement les ensembles d’entraînement, avec un test set composé exclusivement de données réelles.',
+            zh: '使用 1,140 条真实 SciTweets 和 446 条合成推文，仅对训练集进行类别平衡，测试集始终只包含真实数据。',
+          },
+          {
+            en: 'Compared Naive Bayes, Linear SVM, logistic regression, decision trees, K-nearest neighbors and Random Forest with stratified cross-validation and hyperparameter search.',
+            fr: 'Comparaison de Naive Bayes, SVM linéaire, régression logistique, arbres de décision, K plus proches voisins et Random Forest par validation croisée stratifiée et recherche d’hyperparamètres.',
+            zh: '通过分层交叉验证和超参数搜索比较 Naive Bayes、线性 SVM、逻辑回归、决策树、K 近邻和 Random Forest。',
+          },
+          {
+            en: 'Selected LinearSVC for SCI/NON-SCI, CLAIM and CONTEXT, and logistic regression for REF. The final SCI/NON-SCI classifier achieved 0.7982 accuracy and 0.7683 macro F1 on the real test set.',
+            fr: 'Sélection de LinearSVC pour SCI/NON-SCI, CLAIM et CONTEXT, et de la régression logistique pour REF. Le classifieur SCI/NON-SCI final atteint 0,7982 d’accuracy et 0,7683 de F1 macro sur le test réel.',
+            zh: 'SCI/NON-SCI、CLAIM 和 CONTEXT 最终采用 LinearSVC，REF 采用逻辑回归。最终 SCI/NON-SCI 分类器在真实测试集上达到 0.7982 准确率和 0.7683 宏平均 F1。',
+          },
+          {
+            en: 'Preprocessing experiments showed that retaining stopwords improved performance on short tweets. Error and Chi-squared feature analysis also exposed the limits of a small, imbalanced corpus and TF-IDF representations.',
+            fr: 'Les expériences de prétraitement montrent que conserver les stopwords améliore les performances sur les tweets courts. L’analyse des erreurs et des features par Chi² met aussi en évidence les limites d’un corpus petit et déséquilibré et de la représentation TF-IDF.',
+            zh: '预处理实验表明，在短推文中保留停用词反而能提升效果。误差分析和卡方特征分析也揭示了小规模、不平衡语料以及 TF-IDF 表示的局限。',
+          },
+        ],
+      },
+    ],
+  },
+  {
     slug: 'traveling-android-app',
     title: {
       en: 'Traveling - Travel Sharing & Itinerary Planning',
@@ -430,9 +555,9 @@ export const projects: Project[] = [
       zh: 'Traveling - 旅行分享与行程规划应用',
     },
     category: {
-      en: 'Two-person Android coursework project',
-      fr: 'Projet Android réalisé en binôme',
-      zh: '两人合作的安卓课程项目',
+      en: 'Android group coursework project',
+      fr: 'Projet Android de groupe',
+      zh: '安卓课程小组项目',
     },
     summary: {
       en: 'A Kotlin Android application connecting community travel content with personalized itinerary planning. I was primarily responsible for the TravelShare publishing, discovery and social features.',
