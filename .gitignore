@@ -25,6 +25,9 @@ pnpm-debug.log*
 .LSOverride
 Icon
 
+# raw portfolio capture files
+public/media/projects/GJ_Fly/*.mov
+
 # VS Code local workspace files
 .vscode/*
 !.vscode/extensions.json

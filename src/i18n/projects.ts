@@ -423,6 +423,221 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    slug: 'gj-fly-platformer',
+    title: {
+      en: 'GJ Fly - 2D Platformer GameJam Project',
+      fr: 'GJ Fly - Plateformer 2D de GameJam',
+      zh: 'GJ Fly - GameJam 2D 平台跳跃游戏',
+    },
+    category: {
+      en: 'GameJam group project',
+      fr: 'Projet de groupe GameJam',
+      zh: 'GameJam 小组项目',
+    },
+    summary: {
+      en: 'A Unity 2D platformer developed during a GameJam. I worked mainly as the programmer, building the player state machine, jump/dash/combat mechanics, enemies, object pooling, event-driven level triggers, collectibles, hazards, audio hooks and scene flow.',
+      fr: 'Un plateformer 2D Unity développé pendant une GameJam. J’ai principalement travaillé comme programmeur, en réalisant la machine à états du joueur, les mécaniques de saut, dash et combat, les ennemis, l’object pooling, les déclencheurs de niveau événementiels, les collectibles, les dangers, les hooks audio et le déroulement des scènes.',
+      zh: '一个在 GameJam 中使用 Unity 开发的 2D 平台跳跃游戏。我主要担任程序开发，负责玩家状态机、跳跃/冲刺/战斗机制、敌人行为、对象池、事件驱动的关卡触发器、收集物、危险区域、音频钩子和场景流程。',
+    },
+    detailSummary: {
+      en: 'GJ Fly is a Unity 2D platformer developed as a GameJam group project. The game combines responsive platforming controls, double jump, dash, projectile attacks, enemy encounters, hazards, collectibles, gate triggers and multi-level progression. My main role was gameplay programming: character control, state machines, combat logic, enemy behavior, object pooling, event channels, audio integration and scene interactions.',
+      fr: 'GJ Fly est un plateformer 2D Unity développé comme projet de groupe pendant une GameJam. Le jeu combine des contrôles de plateforme réactifs, double saut, dash, attaques par projectiles, ennemis, dangers, collectibles, déclencheurs de portes et progression multi-niveaux. Mon rôle principal était la programmation gameplay : contrôle du personnage, machines à états, logique de combat, comportements ennemis, object pooling, event channels, intégration audio et interactions de scène.',
+      zh: 'GJ Fly 是一个在 GameJam 中合作开发的 Unity 2D 平台跳跃游戏。游戏包含响应式平台跳跃控制、二段跳、冲刺、投射物攻击、敌人遭遇、危险区域、收集物、门触发器和多关卡推进。我主要负责 gameplay 编程，包括角色控制、状态机、战斗逻辑、敌人行为、对象池、事件通道、音频集成和场景交互。',
+    },
+    tags: [
+      'Unity',
+      'C#',
+      '2D Platformer',
+      'GameJam',
+      'State Machine',
+      'ScriptableObject',
+      'Object Pooling',
+      'Unity Input System',
+      'Physics2D',
+      'Gameplay Programming',
+    ],
+    sourceNote: {
+      en: 'This GameJam project is currently presented through gameplay media. Source code or a playable build link can be added later if published.',
+      fr: 'Ce projet GameJam est actuellement présenté à travers des médias de gameplay. Un lien vers le code source ou une version jouable pourra être ajouté plus tard s’il est publié.',
+      zh: '这个 GameJam 项目目前通过玩法视频和截图展示。如果之后发布源码或可玩版本，可以再补充链接。',
+    },
+    coverImage: {
+      src: '/media/projects/GJ_Fly/cover.png',
+      alt: {
+        en: 'Gameplay screenshot from GJ Fly showing the player, collectibles and an enemy in a 2D level',
+        fr: 'Capture de gameplay de GJ Fly montrant le joueur, des collectibles et un ennemi dans un niveau 2D',
+        zh: 'GJ Fly 玩法截图，展示 2D 关卡中的玩家、收集物和敌人',
+      },
+      caption: {
+        en: 'Gameplay screenshot showing the player, collectibles and enemy placement in a hand-drawn 2D level.',
+        fr: 'Capture de gameplay montrant le joueur, les collectibles et le placement des ennemis dans un niveau 2D dessiné à la main.',
+        zh: '玩法截图：手绘风格 2D 关卡中的玩家、收集物与敌人布局。',
+      },
+    },
+    video: {
+      mp4: '/media/projects/GJ_Fly/gameplay-demo.mp4',
+      poster: '/media/projects/GJ_Fly/cover.png',
+      caption: {
+        en: 'Gameplay demo showing platforming movement, collectibles, enemies and level progression.',
+        fr: 'Démonstration de gameplay montrant les déplacements de plateforme, les collectibles, les ennemis et la progression de niveau.',
+        zh: '玩法演示：平台移动、收集物、敌人和关卡推进。',
+      },
+    },
+    images: [
+      {
+        src: '/media/projects/GJ_Fly/main_menu.png',
+        alt: {
+          en: 'Main menu scene of GJ Fly',
+          fr: 'Scène du menu principal de GJ Fly',
+          zh: 'GJ Fly 主菜单场景',
+        },
+        caption: {
+          en: 'Main menu scene introducing the hand-drawn classroom theme.',
+          fr: 'Menu principal introduisant l’ambiance de salle de classe dessinée à la main.',
+          zh: '主菜单场景，展示手绘教室主题氛围。',
+        },
+      },
+      {
+        src: '/media/projects/GJ_Fly/scene_classroom.png',
+        alt: {
+          en: 'Classroom scene from GJ Fly',
+          fr: 'Scène de salle de classe de GJ Fly',
+          zh: 'GJ Fly 教室场景',
+        },
+        caption: {
+          en: 'Classroom scene used as part of the game’s level and story flow.',
+          fr: 'Scène de salle de classe utilisée dans le déroulement des niveaux et de l’histoire.',
+          zh: '教室场景，用于游戏的关卡和叙事流程。',
+        },
+      },
+      {
+        src: '/media/projects/GJ_Fly/movement.png',
+        alt: {
+          en: 'Player movement screenshot from GJ Fly',
+          fr: 'Capture du déplacement du joueur dans GJ Fly',
+          zh: 'GJ Fly 玩家移动截图',
+        },
+        caption: {
+          en: 'Movement gameplay built around jump buffering, coyote time, double jump and dash states.',
+          fr: 'Gameplay de déplacement construit autour du jump buffer, du coyote time, du double saut et des états de dash.',
+          zh: '移动系统围绕跳跃缓冲、土狼时间、二段跳和冲刺状态构建。',
+        },
+      },
+      {
+        src: '/media/projects/GJ_Fly/combat-level.png',
+        alt: {
+          en: 'Colorful level screenshot from GJ Fly with enemy and collectible placement',
+          fr: 'Capture d’un niveau coloré de GJ Fly avec placement d’ennemi et de collectible',
+          zh: 'GJ Fly 彩色关卡截图，包含敌人与收集物布局',
+        },
+        caption: {
+          en: 'Level variation with enemy placement, collectibles and player traversal challenges.',
+          fr: 'Variation de niveau avec placement d’ennemis, collectibles et défis de traversée.',
+          zh: '关卡变化示例，包含敌人布局、收集物和移动挑战。',
+        },
+      },
+      {
+        src: '/media/projects/GJ_Fly/rainbow-level.png',
+        alt: {
+          en: 'Rainbow level screenshot from GJ Fly',
+          fr: 'Capture du niveau arc-en-ciel de GJ Fly',
+          zh: 'GJ Fly 彩虹关卡截图',
+        },
+        caption: {
+          en: 'A later level with a brighter visual mood and different platform layout.',
+          fr: 'Un niveau plus avancé avec une ambiance visuelle plus lumineuse et une disposition différente des plateformes.',
+          zh: '后续关卡画面，使用更明亮的视觉氛围和不同的平台布局。',
+        },
+      },
+    ],
+    sections: [
+      {
+        title: {
+          en: 'Project highlights',
+          fr: 'Points clés du projet',
+          zh: '项目亮点',
+        },
+        items: [
+          {
+            en: 'Responsive 2D platforming controller with walking, jumping, double jump, dash, attack, hurt, landing and death states.',
+            fr: 'Contrôleur de plateforme 2D réactif avec états de marche, saut, double saut, dash, attaque, dégâts, atterrissage et mort.',
+            zh: '响应式 2D 平台控制器，包含行走、跳跃、二段跳、冲刺、攻击、受伤、落地和死亡状态。',
+          },
+          {
+            en: 'Game-feel systems including coyote time, jump input buffering, landing lock time, animation-curve-based dash/fall motion and air movement.',
+            fr: 'Systèmes de game feel incluant coyote time, jump buffer, verrouillage d’atterrissage, dash/chute basés sur des AnimationCurves et contrôle aérien.',
+            zh: '实现提升手感的系统，包括土狼时间、跳跃输入缓冲、落地锁定时间、基于动画曲线的冲刺/下落运动和空中移动。',
+          },
+          {
+            en: 'Interactive level mechanics with collectible stars, spikes, death zones, gates, victory triggers and scene transitions.',
+            fr: 'Mécaniques de niveau interactives avec étoiles collectables, pics, zones de mort, portes, déclencheurs de victoire et transitions de scène.',
+            zh: '交互式关卡机制，包括星星收集物、尖刺、死亡区域、门、胜利触发器和场景切换。',
+          },
+          {
+            en: 'Enemy systems covering patrol/contact-damage enemies and a teacher enemy that fires tracking projectiles when triggered.',
+            fr: 'Systèmes ennemis couvrant les ennemis en patrouille avec dégâts au contact et un professeur qui tire des projectiles de poursuite lorsqu’il est déclenché.',
+            zh: '敌人系统包括巡逻/接触伤害敌人，以及被触发后发射追踪投射物的老师敌人。',
+          },
+          {
+            en: 'ScriptableObject event channels decouple gates, victory triggers and enemy attack activation from scene object references.',
+            fr: 'Des event channels ScriptableObject découplent les portes, les déclencheurs de victoire et l’activation des attaques ennemies des références directes aux objets de scène.',
+            zh: '通过 ScriptableObject 事件通道解耦门、胜利触发器和敌人攻击激活，减少场景对象之间的直接引用。',
+          },
+          {
+            en: 'Object pooling for projectiles and spawned enemies avoids repeated runtime instantiation during gameplay.',
+            fr: 'Object pooling pour les projectiles et les ennemis générés afin d’éviter les instanciations répétées pendant le gameplay.',
+            zh: '为投射物和生成敌人实现对象池，避免 gameplay 过程中重复运行时实例化。',
+          },
+        ],
+      },
+      {
+        title: {
+          en: 'My contributions',
+          fr: 'Mes contributions',
+          zh: '我的贡献',
+        },
+        items: [
+          {
+            en: 'Built a ScriptableObject-based player state machine for Idle, Walk, Sprint, Jump, AirJump, JumpFall, CoyoteTime, Land, Attack, Hurt and Die states.',
+            fr: 'Création d’une machine à états joueur basée sur ScriptableObject pour les états Idle, Walk, Sprint, Jump, AirJump, JumpFall, CoyoteTime, Land, Attack, Hurt et Die.',
+            zh: '构建基于 ScriptableObject 的玩家状态机，覆盖 Idle、Walk、Sprint、Jump、AirJump、JumpFall、CoyoteTime、Land、Attack、Hurt 和 Die 等状态。',
+          },
+          {
+            en: 'Implemented player movement with Unity Physics2D, Unity Input System, ground detection, jump buffering, coyote time, double jump refresh and dash behavior.',
+            fr: 'Implémentation du déplacement joueur avec Unity Physics2D, Unity Input System, détection du sol, jump buffer, coyote time, rafraîchissement du double saut et comportement de dash.',
+            zh: '使用 Unity Physics2D 和 Unity Input System 实现玩家移动，包括地面检测、跳跃缓冲、土狼时间、二段跳刷新和冲刺行为。',
+          },
+          {
+            en: 'Developed projectile combat systems for player attack waves, teacher attack waves and pooled projectile spawning.',
+            fr: 'Développement des systèmes de combat par projectiles pour les vagues d’attaque du joueur, les attaques du professeur et le spawn de projectiles poolés.',
+            zh: '开发投射物战斗系统，包括玩家攻击波、老师攻击波和基于对象池的投射物生成。',
+          },
+          {
+            en: 'Created reusable object pooling for projectiles and spawned enemies to reduce repeated instantiation during gameplay.',
+            fr: 'Création d’un object pooling réutilisable pour les projectiles et ennemis générés afin de réduire les instanciations répétées pendant le gameplay.',
+            zh: '创建可复用对象池，用于投射物和生成敌人，减少 gameplay 期间的重复实例化。',
+          },
+          {
+            en: 'Implemented enemy logic for patrolling, collision damage, taking damage, death states, sound feedback and attack triggers.',
+            fr: 'Implémentation de la logique ennemie : patrouille, dégâts de collision, réception de dégâts, états de mort, retours sonores et déclencheurs d’attaque.',
+            zh: '实现敌人逻辑，包括巡逻、碰撞伤害、受伤、死亡状态、音效反馈和攻击触发。',
+          },
+          {
+            en: 'Built event-channel-based level interactions for gates, victory triggers and enemy attack activation using ScriptableObject event assets.',
+            fr: 'Création d’interactions de niveau basées sur des event channels pour les portes, les déclencheurs de victoire et l’activation des attaques ennemies avec des assets ScriptableObject.',
+            zh: '使用 ScriptableObject 事件资源构建基于事件通道的关卡交互，用于门、胜利触发器和敌人攻击激活。',
+          },
+          {
+            en: 'Integrated gameplay audio hooks, menu and volume UI behavior, spawn points, camera management and scene progression.',
+            fr: 'Intégration des hooks audio de gameplay, du menu et du contrôle du volume, des points de spawn, de la gestion caméra et de la progression des scènes.',
+            zh: '集成 gameplay 音频钩子、菜单与音量 UI 行为、出生点、相机管理和场景推进。',
+          },
+        ],
+      },
+    ],
+    featured: true,
+  },
+  {
     slug: 'scitweets-machine-learning',
     title: {
       en: 'SciTweets Scientific Discourse Classification',
