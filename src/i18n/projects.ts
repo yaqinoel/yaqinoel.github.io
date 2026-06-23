@@ -14,6 +14,20 @@ type ProjectSection = {
   items?: LocalizedText[];
 };
 
+type ProjectDemoVideoClip = {
+  title?: LocalizedText;
+  mp4: string;
+  poster?: string;
+};
+
+type ProjectDemoVideo = {
+  title: LocalizedText;
+  mp4?: string;
+  poster?: string;
+  caption?: LocalizedText;
+  videos?: ProjectDemoVideoClip[];
+};
+
 export type Project = {
   slug: string;
   title: LocalizedText;
@@ -25,6 +39,7 @@ export type Project = {
   demoUrl?: string;
   sourceNote?: LocalizedText;
   coverImage?: ProjectImage;
+  detailImage?: ProjectImage;
   image?: ProjectImage;
   images?: ProjectImage[];
   video?: {
@@ -33,6 +48,7 @@ export type Project = {
     poster?: string;
     caption?: LocalizedText;
   };
+  demoVideos?: ProjectDemoVideo[];
   sections?: ProjectSection[];
   highlights?: LocalizedText[];
   featured?: boolean;
@@ -456,100 +472,71 @@ export const projects: Project[] = [
       'Physics2D',
       'Gameplay Programming',
     ],
-    sourceNote: {
-      en: 'This GameJam project is currently presented through gameplay media. Source code or a playable build link can be added later if published.',
-      fr: 'Ce projet GameJam est actuellement présenté à travers des médias de gameplay. Un lien vers le code source ou une version jouable pourra être ajouté plus tard s’il est publié.',
-      zh: '这个 GameJam 项目目前通过玩法视频和截图展示。如果之后发布源码或可玩版本，可以再补充链接。',
-    },
     coverImage: {
-      src: '/media/projects/GJ_Fly/cover.png',
+      src: '/media/projects/GJ_Fly/level-0-poster.png',
       alt: {
-        en: 'Gameplay screenshot from GJ Fly showing the player, collectibles and an enemy in a 2D level',
-        fr: 'Capture de gameplay de GJ Fly montrant le joueur, des collectibles et un ennemi dans un niveau 2D',
-        zh: 'GJ Fly 玩法截图，展示 2D 关卡中的玩家、收集物和敌人',
+        en: 'GJ Fly level 0 classroom scene',
+        fr: 'Scène de salle de classe du niveau 0 de GJ Fly',
+        zh: 'GJ Fly Level 0 教室场景',
       },
       caption: {
-        en: 'Gameplay screenshot showing the player, collectibles and enemy placement in a hand-drawn 2D level.',
-        fr: 'Capture de gameplay montrant le joueur, les collectibles et le placement des ennemis dans un niveau 2D dessiné à la main.',
-        zh: '玩法截图：手绘风格 2D 关卡中的玩家、收集物与敌人布局。',
+        en: 'Level 0 classroom scene from the GameJam build.',
+        fr: 'Scène de salle de classe du niveau 0 dans la version GameJam.',
+        zh: 'GameJam 版本中的 Level 0 教室场景。',
       },
     },
-    video: {
-      mp4: '/media/projects/GJ_Fly/gameplay-demo.mp4',
-      poster: '/media/projects/GJ_Fly/cover.png',
+    detailImage: {
+      src: '/media/projects/GJ_Fly/main_menu.png',
+      alt: {
+        en: 'Initial UI and main menu of GJ Fly',
+        fr: 'Interface initiale et menu principal de GJ Fly',
+        zh: 'GJ Fly 初始 UI 与主菜单',
+      },
       caption: {
-        en: 'Gameplay demo showing platforming movement, collectibles, enemies and level progression.',
-        fr: 'Démonstration de gameplay montrant les déplacements de plateforme, les collectibles, les ennemis et la progression de niveau.',
-        zh: '玩法演示：平台移动、收集物、敌人和关卡推进。',
+        en: 'Initial UI and main menu of the GameJam build.',
+        fr: 'Interface initiale et menu principal de la version GameJam.',
+        zh: 'GameJam 版本的初始 UI 与主菜单。',
       },
     },
-    images: [
+    demoVideos: [
       {
-        src: '/media/projects/GJ_Fly/main_menu.png',
-        alt: {
-          en: 'Main menu scene of GJ Fly',
-          fr: 'Scène du menu principal de GJ Fly',
-          zh: 'GJ Fly 主菜单场景',
+        title: {
+          en: 'Level 0',
+          fr: 'Niveau 0',
+          zh: 'Level 0',
         },
-        caption: {
-          en: 'Main menu scene introducing the hand-drawn classroom theme.',
-          fr: 'Menu principal introduisant l’ambiance de salle de classe dessinée à la main.',
-          zh: '主菜单场景，展示手绘教室主题氛围。',
-        },
+        mp4: '/media/projects/GJ_Fly/level-0-start.mp4',
+        poster: '/media/projects/GJ_Fly/level-0-poster.png',
       },
       {
-        src: '/media/projects/GJ_Fly/scene_classroom.png',
-        alt: {
-          en: 'Classroom scene from GJ Fly',
-          fr: 'Scène de salle de classe de GJ Fly',
-          zh: 'GJ Fly 教室场景',
+        title: {
+          en: 'Level 1',
+          fr: 'Niveau 1',
+          zh: 'Level 1',
         },
-        caption: {
-          en: 'Classroom scene used as part of the game’s level and story flow.',
-          fr: 'Scène de salle de classe utilisée dans le déroulement des niveaux et de l’histoire.',
-          zh: '教室场景，用于游戏的关卡和叙事流程。',
-        },
+        mp4: '/media/projects/GJ_Fly/level-1.mp4',
+        poster: '/media/projects/GJ_Fly/level-1-poster.png',
       },
       {
-        src: '/media/projects/GJ_Fly/movement.png',
-        alt: {
-          en: 'Player movement screenshot from GJ Fly',
-          fr: 'Capture du déplacement du joueur dans GJ Fly',
-          zh: 'GJ Fly 玩家移动截图',
+        title: {
+          en: 'Level 2',
+          fr: 'Niveau 2',
+          zh: 'Level 2',
         },
-        caption: {
-          en: 'Movement gameplay built around jump buffering, coyote time, double jump and dash states.',
-          fr: 'Gameplay de déplacement construit autour du jump buffer, du coyote time, du double saut et des états de dash.',
-          zh: '移动系统围绕跳跃缓冲、土狼时间、二段跳和冲刺状态构建。',
-        },
+        mp4: '/media/projects/GJ_Fly/level-2.mp4',
+        poster: '/media/projects/GJ_Fly/level-2-poster.png',
       },
       {
-        src: '/media/projects/GJ_Fly/combat-level.png',
-        alt: {
-          en: 'Colorful level screenshot from GJ Fly with enemy and collectible placement',
-          fr: 'Capture d’un niveau coloré de GJ Fly avec placement d’ennemi et de collectible',
-          zh: 'GJ Fly 彩色关卡截图，包含敌人与收集物布局',
+        title: {
+          en: 'Level 3',
+          fr: 'Niveau 3',
+          zh: 'Level 3',
         },
-        caption: {
-          en: 'Level variation with enemy placement, collectibles and player traversal challenges.',
-          fr: 'Variation de niveau avec placement d’ennemis, collectibles et défis de traversée.',
-          zh: '关卡变化示例，包含敌人布局、收集物和移动挑战。',
-        },
-      },
-      {
-        src: '/media/projects/GJ_Fly/rainbow-level.png',
-        alt: {
-          en: 'Rainbow level screenshot from GJ Fly',
-          fr: 'Capture du niveau arc-en-ciel de GJ Fly',
-          zh: 'GJ Fly 彩虹关卡截图',
-        },
-        caption: {
-          en: 'A later level with a brighter visual mood and different platform layout.',
-          fr: 'Un niveau plus avancé avec une ambiance visuelle plus lumineuse et une disposition différente des plateformes.',
-          zh: '后续关卡画面，使用更明亮的视觉氛围和不同的平台布局。',
-        },
+        mp4: '/media/projects/GJ_Fly/level-3.mp4',
+        poster: '/media/projects/GJ_Fly/level-3-poster.png',
       },
     ],
+    images: [],
     sections: [
       {
         title: {

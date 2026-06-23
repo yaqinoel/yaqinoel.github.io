@@ -19,9 +19,10 @@ const { project } = Astro.props;
 const t = useTranslations(lang);
 const projectDescription = project.detailSummary?.[lang] ?? project.summary[lang];
 const resultImages = project.images ?? (project.image ? [project.image] : []);
+const leadImage = !project.video ? (project.detailImage ?? project.coverImage) : undefined;
 const keyHighlightItems = project.sections?.[0]?.items ?? project.highlights;
 const contributionItems = project.sections?.[1]?.items;
-const showImagesWithContributions = Boolean(contributionItems && resultImages.length);
+const hasProjectLinks = Boolean(project.sourceNote || project.repositoryUrl || project.demoUrl);
 ---
 
 <Layout lang={lang} title={`${project.title[lang]} | ${profile.name}`} description={projectDescription}>
@@ -42,7 +43,16 @@ const showImagesWithContributions = Boolean(contributionItems && resultImages.le
       )
     }
 
-    {!showImagesWithContributions && resultImages.map((image) => (
+    {
+      leadImage && (
+        <figure class="lead-media">
+          <img src={leadImage.src} alt={leadImage.alt[lang]} decoding="async" />
+          {leadImage.caption && <figcaption>{leadImage.caption[lang]}</figcaption>}
+        </figure>
+      )
+    }
+
+    {resultImages.map((image) => (
         <figure>
           <img src={image.src} alt={image.alt[lang]} loading="lazy" decoding="async" />
           {image.caption && <figcaption>{image.caption[lang]}</figcaption>}
@@ -53,19 +63,62 @@ const showImagesWithContributions = Boolean(contributionItems && resultImages.le
       {project.tags.map((tag) => <li>{tag}</li>)}
     </ul>
 
-    <section class="project-links">
-      {project.sourceNote && <p>{project.sourceNote[lang]}</p>}
-      <div class="button-row">
-        {
-          project.repositoryUrl && (
-            <a class="button primary" href={project.repositoryUrl}>
-              {t('sourceCode')}
-            </a>
-          )
-        }
-        {project.demoUrl && <a class="button" href={project.demoUrl}>{t('demo')}</a>}
-      </div>
-    </section>
+    {
+      hasProjectLinks && (
+        <section class="project-links">
+          {project.sourceNote && <p>{project.sourceNote[lang]}</p>}
+          <div class="button-row">
+            {
+              project.repositoryUrl && (
+                <a class="button primary" href={project.repositoryUrl}>
+                  {t('sourceCode')}
+                </a>
+              )
+            }
+            {project.demoUrl && <a class="button" href={project.demoUrl}>{t('demo')}</a>}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      project.demoVideos && (
+        <section class="demos" id="demo">
+          <h2>{t('demos')}</h2>
+          <div class="demo-grid">
+            {project.demoVideos.map((demoVideo) => {
+              const clips =
+                demoVideo.videos ??
+                (demoVideo.mp4
+                  ? [
+                      {
+                        mp4: demoVideo.mp4,
+                        poster: demoVideo.poster,
+                      },
+                    ]
+                  : []);
+
+              return (
+                <figure class="demo-card">
+                  <h3>{demoVideo.title[lang]}</h3>
+                  <div class="demo-video-list">
+                    {clips.map((clip) => (
+                      <div class="demo-video">
+                        {clip.title && <h4>{clip.title[lang]}</h4>}
+                        <video controls playsinline preload="metadata" poster={clip.poster}>
+                          <source src={clip.mp4} type="video/mp4" />
+                        </video>
+                      </div>
+                    ))}
+                  </div>
+                  {demoVideo.caption && <figcaption>{demoVideo.caption[lang]}</figcaption>}
+                </figure>
+              );
+            })}
+          </div>
+        </section>
+      )
+    }
 
     {
       keyHighlightItems && (
@@ -89,12 +142,6 @@ const showImagesWithContributions = Boolean(contributionItems && resultImages.le
               <li>{contribution[lang]}</li>
             ))}
           </ul>
-          {showImagesWithContributions && resultImages.map((image) => (
-            <figure>
-              <img src={image.src} alt={image.alt[lang]} loading="lazy" decoding="async" />
-              {image.caption && <figcaption>{image.caption[lang]}</figcaption>}
-            </figure>
-          ))}
         </section>
       )
     }
@@ -161,6 +208,38 @@ const showImagesWithContributions = Boolean(contributionItems && resultImages.le
     margin-top: 42px;
     padding-top: 34px;
     border-top: 1px solid var(--line);
+  }
+
+  .demos {
+    margin-top: 42px;
+    padding-top: 34px;
+    border-top: 1px solid var(--line);
+  }
+
+  .demo-grid {
+    display: grid;
+    gap: 28px;
+  }
+
+  .demo-card {
+    margin: 0;
+  }
+
+  .demo-card h3 {
+    margin-bottom: 12px;
+    font-size: 1rem;
+  }
+
+  .demo-video-list {
+    display: grid;
+    gap: 18px;
+  }
+
+  .demo-video h4 {
+    margin-bottom: 10px;
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-weight: 700;
   }
 
   .highlights ul {

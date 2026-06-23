@@ -2,7 +2,7 @@
 import ProjectCard from './ProjectCard.astro';
 import type { Lang } from '../i18n/languages';
 import { profile } from '../i18n/profile';
-import { getFeaturedProjects } from '../i18n/projects';
+import { projects } from '../i18n/projects';
 import { useTranslations } from '../i18n/ui';
 
 type Props = {
@@ -11,7 +11,6 @@ type Props = {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const featuredProjects = getFeaturedProjects();
 ---
 
 <section class="hero">
@@ -62,7 +61,7 @@ const featuredProjects = getFeaturedProjects();
 <section class="section">
   <h2>{t('selectedProjects')}</h2>
   <div class="grid">
-    {featuredProjects.map((project) => <ProjectCard lang={lang} project={project} />)}
+    {projects.map((project) => <ProjectCard lang={lang} project={project} />)}
   </div>
 </section>
 

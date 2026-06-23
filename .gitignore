@@ -27,6 +27,8 @@ Icon
 
 # raw portfolio capture files
 public/media/projects/GJ_Fly/*.mov
+public/media/projects/GJ_Fly/level-3-fail.mp4
+public/media/projects/GJ_Fly/level-3-clear.mp4
 
 # VS Code local workspace files
 .vscode/*
