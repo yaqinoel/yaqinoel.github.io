@@ -12,12 +12,36 @@ export const profile = {
     duration: '6 months',
   },
   focusAreas: [
-    'Computer Graphics',
-    'Image Processing',
-    'Artificial Intelligence',
-    'Computer Vision',
-    'Game Development',
-    'XR / VR',
+    {
+      en: 'Computer Graphics',
+      fr: 'Informatique graphique',
+      zh: '计算机图形学',
+    },
+    {
+      en: 'Image Processing',
+      fr: 'Traitement d’images',
+      zh: '图像处理',
+    },
+    {
+      en: 'Artificial Intelligence',
+      fr: 'Intelligence artificielle',
+      zh: '人工智能',
+    },
+    {
+      en: 'Computer Vision',
+      fr: 'Vision par ordinateur',
+      zh: '计算机视觉',
+    },
+    {
+      en: 'Game Development',
+      fr: 'Développement de jeux vidéo',
+      zh: '游戏开发',
+    },
+    {
+      en: 'XR / VR',
+      fr: 'XR / Réalité virtuelle',
+      zh: 'XR / 虚拟现实',
+    },
   ],
   skills: [
     'C++',

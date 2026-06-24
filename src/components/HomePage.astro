@@ -42,7 +42,7 @@ const t = useTranslations(lang);
     <div class="detail-group">
       <p class="detail-label">{t('focusLabel')}</p>
       <ul class="focus-list">
-        {profile.focusAreas.map((area) => <li>{area}</li>)}
+        {profile.focusAreas.map((area) => <li>{area[lang]}</li>)}
       </ul>
     </div>
     <dl class="availability">

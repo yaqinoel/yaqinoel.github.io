@@ -10,16 +10,46 @@ export function getStaticPaths() {
 
 const lang = isLang(Astro.params.lang) ? Astro.params.lang : defaultLang;
 const t = useTranslations(lang);
+const cvUrl = '/cv/yaqi-zhang-cv-fr.pdf';
 ---
 
 <Layout lang={lang} title={`${t('navCV')} | ${profile.name}`}>
-  <section>
+  <section class="cv-page">
     <p class="eyebrow">{t('navCV')}</p>
     <h1>{t('navCV')}</h1>
     <p>{t('cvIntro')}</p>
     <div class="button-row">
-      <a class="button" href={`mailto:${profile.email}`}>{profile.email}</a>
-      <a class="button" href={profile.github}>GitHub</a>
+      <a class="button primary" href={cvUrl} target="_blank" rel="noreferrer">{t('cvOpen')}</a>
+      <a class="button" href={cvUrl} download="Yaqi-ZHANG-CV-Francais.pdf">
+        {t('cvDownload')}
+      </a>
     </div>
+    <iframe
+      class="cv-preview"
+      src={cvUrl}
+      title={`${t('navCV')} - ${profile.name}`}
+    ></iframe>
   </section>
 </Layout>
+
+<style>
+  .cv-page {
+    padding-bottom: 32px;
+  }
+
+  .cv-preview {
+    width: 100%;
+    height: min(1120px, 82vh);
+    margin-top: 32px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+  }
+
+  @media (max-width: 680px) {
+    .cv-preview {
+      height: 72vh;
+      margin-top: 24px;
+    }
+  }
+</style>

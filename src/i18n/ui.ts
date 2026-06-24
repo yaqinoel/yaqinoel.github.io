@@ -30,7 +30,10 @@ export const ui = {
     myContributions: 'My contributions',
     projectsIntro:
       'A focused selection of academic, research-oriented and software engineering projects.',
-    cvIntro: 'CV download will be added here once the latest version is ready.',
+    cvIntro:
+      'View or download the latest French version of my CV. English and Chinese versions can be provided on request.',
+    cvOpen: 'Open the CV',
+    cvDownload: 'Download the PDF',
   },
   fr: {
     siteTitle: 'ZHANG Yaqi | Portfolio',
@@ -61,7 +64,10 @@ export const ui = {
     myContributions: 'Mes contributions',
     projectsIntro:
       'Une sélection de projets académiques, de recherche appliquée et de développement logiciel.',
-    cvIntro: 'Le CV sera ajouté ici lorsque la version la plus récente sera prête.',
+    cvIntro:
+      'Consultez ou téléchargez la version française la plus récente de mon CV.',
+    cvOpen: 'Ouvrir le CV',
+    cvDownload: 'Télécharger le PDF',
   },
   zh: {
     siteTitle: '张亚奇 | 个人作品集',
@@ -91,7 +97,9 @@ export const ui = {
     keyHighlights: '技术亮点',
     myContributions: '我负责的内容',
     projectsIntro: '这里展示我的课程项目、科研导向项目和软件开发项目。',
-    cvIntro: '最新版 CV 准备好后会放在这里下载。',
+    cvIntro: '可以在线查看或下载最新版法语简历。',
+    cvOpen: '打开简历',
+    cvDownload: '下载 PDF',
   },
 } as const;
 
