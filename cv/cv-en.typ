@@ -144,7 +144,7 @@
       )
       #side-label(
         "Tools",
-        [Git, Linux, Unity, Blender, OpenMP, OpenXR],
+        [Git, Linux, Unity, Blender, OpenMP, OpenXR, CUDA],
       )
 
       #v(1fr)

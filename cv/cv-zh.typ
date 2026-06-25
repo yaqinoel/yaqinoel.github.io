@@ -141,7 +141,7 @@
       )
       #side-label(
         "工具与平台",
-        [Git、Linux、Unity、Blender、OpenMP、OpenXR],
+        [Git、Linux、Unity、Blender、OpenMP、OpenXR、CUDA],
       )
 
       #v(1fr)
