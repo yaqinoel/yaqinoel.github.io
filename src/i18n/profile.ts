@@ -39,7 +39,7 @@ export const profile = {
     },
     {
       en: 'XR / VR',
-      fr: 'XR / Réalité virtuelle',
+      fr: 'XR / VR',
       zh: 'XR / 虚拟现实',
     },
   ],
@@ -346,7 +346,7 @@ export const profile = {
       details: {
         en: 'M1 completed, entering M2. Ranked 3/32, mention bien. The program develops engineering and research expertise in image processing and analysis, computer graphics and artificial intelligence, with applications in computer vision, XR, video games and interactive simulation.',
         fr: 'M1 terminé, entrée en M2. Classement 3/32, mention bien. Le parcours forme des ingénieurs et chercheurs en traitement et analyse d’images, informatique graphique et intelligence artificielle, avec des applications en vision, XR, jeux vidéo et simulation interactive.',
-        zh: '已完成 M1，即将进入 M2。排名 3/32，mention bien。该方向围绕图像处理与分析、计算机图形学和人工智能，培养面向计算机视觉、XR、电子游戏与交互仿真的工程和科研能力。',
+        zh: '已完成硕士一年级（M1），即将进入硕士二年级（M2）。排名 3/32。学习方向围绕图像处理与分析、计算机图形学和人工智能，培养面向计算机视觉、VR、电子游戏与交互仿真的工程和科研能力。',
       } satisfies LocalizedText,
     },
     {
@@ -356,9 +356,9 @@ export const profile = {
         zh: '蒙彼利埃大学 IAE 管理学院',
       } satisfies LocalizedText,
       program: {
-        en: 'Master 1 Management of Technologies and Sciences - Double Degree',
-        fr: 'Master 1 Management des Technologies et des Sciences - Double diplôme',
-        zh: '技术与科学管理硕士一年级 - 双学位项目',
+        en: 'Master Management of Technologies and Sciences - Double Degree',
+        fr: 'Master Management des Technologies et des Sciences - Double diplôme',
+        zh: '技术与科学管理硕士 - 双学位项目',
       } satisfies LocalizedText,
       period: '2025 - 2027',
       details: {
