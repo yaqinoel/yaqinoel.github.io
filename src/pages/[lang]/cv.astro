@@ -10,24 +10,46 @@ export function getStaticPaths() {
 
 const lang = isLang(Astro.params.lang) ? Astro.params.lang : defaultLang;
 const t = useTranslations(lang);
-const cvUrl = '/cv/yaqi-zhang-cv-fr.pdf';
+const cvDocuments = [
+  {
+    lang: 'en',
+    label: t('cvEnglish'),
+    url: '/cv/yaqi-zhang-resume-en.pdf',
+    filename: 'Yaqi-ZHANG-Resume-English.pdf',
+  },
+  {
+    lang: 'fr',
+    label: t('cvFrench'),
+    url: '/cv/yaqi-zhang-cv-fr.pdf',
+    filename: 'Yaqi-ZHANG-CV-Francais.pdf',
+  },
+  {
+    lang: 'zh',
+    label: t('cvChinese'),
+    url: '/cv/yaqi-zhang-resume-zh.pdf',
+    filename: 'Yaqi-ZHANG-Resume-Chinese.pdf',
+  },
+] as const;
+const currentDocument =
+  cvDocuments.find((document) => document.lang === lang) ?? cvDocuments[0];
 ---
 
 <Layout lang={lang} title={`${t('navCV')} | ${profile.name}`}>
   <section class="cv-page">
-    <p class="eyebrow">{t('navCV')}</p>
     <h1>{t('navCV')}</h1>
     <p>{t('cvIntro')}</p>
     <div class="button-row">
-      <a class="button primary" href={cvUrl} target="_blank" rel="noreferrer">{t('cvOpen')}</a>
-      <a class="button" href={cvUrl} download="Yaqi-ZHANG-CV-Francais.pdf">
+      <a class="button primary" href={currentDocument.url} target="_blank" rel="noreferrer">
+        {t('cvOpen')}
+      </a>
+      <a class="button" href={currentDocument.url} download={currentDocument.filename}>
         {t('cvDownload')}
       </a>
     </div>
     <iframe
       class="cv-preview"
-      src={cvUrl}
-      title={`${t('navCV')} - ${profile.name}`}
+      src={currentDocument.url}
+      title={`${currentDocument.label} ${t('navCV')} - ${profile.name}`}
     ></iframe>
   </section>
 </Layout>
@@ -39,7 +61,8 @@ const cvUrl = '/cv/yaqi-zhang-cv-fr.pdf';
 
   .cv-preview {
     width: 100%;
-    height: min(1120px, 82vh);
+    height: auto;
+    aspect-ratio: 210 / 297;
     margin-top: 32px;
     border: 1px solid var(--line);
     border-radius: 8px;
@@ -48,7 +71,6 @@ const cvUrl = '/cv/yaqi-zhang-cv-fr.pdf';
 
   @media (max-width: 680px) {
     .cv-preview {
-      height: 72vh;
       margin-top: 24px;
     }
   }

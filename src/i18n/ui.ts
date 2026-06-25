@@ -6,7 +6,7 @@ export const ui = {
     navHome: 'Home',
     navAbout: 'About',
     navProjects: 'Projects',
-    navCV: 'CV',
+    navCV: 'Resume',
     heroRole: 'M2 Computer Science Student',
     profilePhotoAlt: 'Portrait of ZHANG Yaqi',
     heroTitle: 'Computer Graphics, Image Processing & AI',
@@ -31,9 +31,12 @@ export const ui = {
     projectsIntro:
       'A focused selection of academic, research-oriented and software engineering projects.',
     cvIntro:
-      'View or download the latest French version of my CV. English and Chinese versions can be provided on request.',
-    cvOpen: 'Open the CV',
+      'View or download the latest version of my resume in English, French or Chinese.',
+    cvOpen: 'Open the resume',
     cvDownload: 'Download the PDF',
+    cvEnglish: 'English',
+    cvFrench: 'French',
+    cvChinese: 'Chinese',
   },
   fr: {
     siteTitle: 'ZHANG Yaqi | Portfolio',
@@ -65,9 +68,12 @@ export const ui = {
     projectsIntro:
       'Une sélection de projets académiques, de recherche appliquée et de développement logiciel.',
     cvIntro:
-      'Consultez ou téléchargez la version française la plus récente de mon CV.',
+      'Consultez ou téléchargez la version la plus récente de mon CV en anglais, français ou chinois.',
     cvOpen: 'Ouvrir le CV',
     cvDownload: 'Télécharger le PDF',
+    cvEnglish: 'Anglais',
+    cvFrench: 'Français',
+    cvChinese: 'Chinois',
   },
   zh: {
     siteTitle: '张亚奇 | 个人作品集',
@@ -97,9 +103,12 @@ export const ui = {
     keyHighlights: '技术亮点',
     myContributions: '我负责的内容',
     projectsIntro: '这里展示我的课程项目、科研导向项目和软件开发项目。',
-    cvIntro: '可以在线查看或下载最新版法语简历。',
+    cvIntro: '可以在线查看或下载最新版英语、法语或中文简历。',
     cvOpen: '打开简历',
     cvDownload: '下载 PDF',
+    cvEnglish: '英语',
+    cvFrench: '法语',
+    cvChinese: '中文',
   },
 } as const;
 
