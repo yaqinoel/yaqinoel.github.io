@@ -25,7 +25,7 @@ const contributionItems = project.sections?.[1]?.items;
 const hasProjectLinks = Boolean(project.sourceNote || project.repositoryUrl || project.demoUrl);
 ---
 
-<Layout lang={lang} title={`${project.title[lang]} | ${profile.name}`} description={projectDescription}>
+<Layout lang={lang} title={`${project.title[lang]} | ${profile.name[lang]}`} description={projectDescription}>
   <article class="project-detail">
     <p class="eyebrow">{project.category[lang]}</p>
     <h1>{project.title[lang]}</h1>

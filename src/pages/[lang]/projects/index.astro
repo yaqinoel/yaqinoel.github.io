@@ -14,7 +14,7 @@ const lang = isLang(Astro.params.lang) ? Astro.params.lang : defaultLang;
 const t = useTranslations(lang);
 ---
 
-<Layout lang={lang} title={`${t('navProjects')} | ${profile.name}`}>
+<Layout lang={lang} title={`${t('navProjects')} | ${profile.name[lang]}`}>
   <section>
     <p class="eyebrow">{t('navProjects')}</p>
     <h1>{t('selectedProjects')}</h1>

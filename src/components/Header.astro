@@ -12,7 +12,7 @@ const t = useTranslations(lang);
 ---
 
 <header class="site-header">
-  <a class="brand" href={`/${lang}/`}>ZHANG Yaqi</a>
+  <a class="brand" href={`/${lang}/`}>{lang === 'zh' ? '张亚奇' : 'ZHANG Yaqi'}</a>
   <nav aria-label="Primary navigation">
     <a href={`/${lang}/`}>{t('navHome')}</a>
     <a href={`/${lang}/about/`}>{t('navAbout')}</a>

@@ -27,10 +27,10 @@ const educationGroups = profile.education.reduce<Array<{ period: string; items: 
 );
 ---
 
-<Layout lang={lang} title={`${t('navAbout')} | ${profile.name}`}>
+<Layout lang={lang} title={`${t('navAbout')} | ${profile.name[lang]}`}>
   <section>
     <p class="eyebrow">{t('navAbout')}</p>
-    <h1>{profile.name}</h1>
+    <h1>{profile.name[lang]}</h1>
     <p class="intro">{t('heroSummary')}</p>
   </section>
 

@@ -34,7 +34,7 @@ const currentDocument =
   cvDocuments.find((document) => document.lang === lang) ?? cvDocuments[0];
 ---
 
-<Layout lang={lang} title={`${t('navCV')} | ${profile.name}`}>
+<Layout lang={lang} title={`${t('navCV')} | ${profile.name[lang]}`}>
   <section class="cv-page">
     <h1>{t('navCV')}</h1>
     <p>{t('cvIntro')}</p>
@@ -49,7 +49,7 @@ const currentDocument =
     <iframe
       class="cv-preview"
       src={currentDocument.url}
-      title={`${currentDocument.label} ${t('navCV')} - ${profile.name}`}
+      title={`${currentDocument.label} ${t('navCV')} - ${profile.name[lang]}`}
     ></iframe>
   </section>
 </Layout>

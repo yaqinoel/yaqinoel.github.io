@@ -3,7 +3,11 @@ import type { Lang } from './languages';
 type LocalizedText = Record<Lang, string>;
 
 export const profile = {
-  name: 'ZHANG Yaqi',
+  name: {
+    en: 'ZHANG Yaqi',
+    fr: 'ZHANG Yaqi',
+    zh: '张亚奇',
+  } satisfies LocalizedText,
   location: 'Montpellier, France',
   email: 'yaqizhang.unique@outlook.com',
   github: 'https://github.com/yaqinoel',
