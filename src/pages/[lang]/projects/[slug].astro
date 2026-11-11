@@ -60,7 +60,7 @@ const hasProjectLinks = Boolean(project.sourceNote || project.repositoryUrl || p
       ))}
 
     <ul class="tag-list project-tags">
-      {project.tags.map((tag) => <li>{tag}</li>)}
+      {project.tags.map((tag) => <li>{typeof tag === 'string' ? tag : tag[lang]}</li>)}
     </ul>
 
     {
@@ -79,6 +79,30 @@ const hasProjectLinks = Boolean(project.sourceNote || project.repositoryUrl || p
           </div>
         </section>
       )
+    }
+
+    {
+      project.comparisons?.map((comparison) => (
+        <section class="comparison-section">
+          <h2>{comparison.title[lang]}</h2>
+          <div class:list={['comparison-grid', { 'comparison-pair': comparison.images.length === 2 }]}>
+            {comparison.images.map((image) => (
+              <figure>
+                {image.caption && <figcaption>{image.caption[lang]}</figcaption>}
+                <a href={image.src} target="_blank" rel="noreferrer">
+                  <img src={image.src} alt={image.alt[lang]} loading="lazy" decoding="async" />
+                </a>
+                {image.histogram && (
+                  <a class="comparison-histogram" href={image.histogram.src} target="_blank" rel="noreferrer">
+                    <img src={image.histogram.src} alt={image.histogram.alt[lang]} loading="lazy" decoding="async" />
+                  </a>
+                )}
+              </figure>
+            ))}
+          </div>
+          {comparison.caption && <p class="comparison-caption">{comparison.caption[lang]}</p>}
+        </section>
+      ))
     }
 
     {
@@ -159,6 +183,47 @@ const hasProjectLinks = Boolean(project.sourceNote || project.repositoryUrl || p
 
   .project-tags {
     margin-top: 34px;
+  }
+
+  .comparison-section {
+    margin-top: 36px;
+  }
+
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: 12px;
+  }
+
+  .comparison-grid.comparison-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .comparison-grid figure {
+    min-width: 0;
+    margin: 0;
+  }
+
+  .comparison-grid figcaption {
+    margin: 0 0 8px;
+  }
+
+  .comparison-histogram {
+    display: block;
+    margin-top: 10px;
+  }
+
+  .comparison-caption {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 680px) {
+    .comparison-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   figure {

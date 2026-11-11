@@ -9,13 +9,32 @@ type Props = {
 
 const { lang, project } = Astro.props;
 const thumbnail = project.coverImage ?? project.image;
+const comparisonImages = project.coverComparison ?? [];
+const hasComparison = comparisonImages.length > 0;
 ---
 
 <article class="project-card">
   {
-    thumbnail && (
-      <a class="thumbnail" href={`/${lang}/projects/${project.slug}/`} aria-label={project.title[lang]}>
-        <img src={thumbnail.src} alt={thumbnail.alt[lang]} loading="lazy" />
+    (hasComparison || thumbnail) && (
+      <a
+        class="thumbnail"
+        style={hasComparison ? '--thumbnail-columns: 2; --thumbnail-rows: 2;' : undefined}
+        href={`/${lang}/projects/${project.slug}/`}
+        aria-label={project.title[lang]}
+      >
+        {hasComparison ? comparisonImages.map((image) => (
+          <span class="comparison-tile">
+            <img src={image.src} alt={image.alt[lang]} loading="lazy" decoding="async" />
+            {image.caption && <span>{image.caption[lang]}</span>}
+          </span>
+        )) : thumbnail && (
+          <img
+            src={thumbnail.src}
+            alt={thumbnail.alt[lang]}
+            loading="lazy"
+            style={`object-fit: ${project.coverFit ?? 'cover'};`}
+          />
+        )}
       </a>
     )
   }
@@ -25,7 +44,7 @@ const thumbnail = project.coverImage ?? project.image;
   </h3>
   <p>{project.summary[lang]}</p>
   <ul class="tag-list">
-    {project.tags.map((tag) => <li>{tag}</li>)}
+    {project.tags.map((tag) => <li>{typeof tag === 'string' ? tag : tag[lang]}</li>)}
   </ul>
 </article>
 
@@ -39,7 +58,10 @@ const thumbnail = project.coverImage ?? project.image;
   }
 
   .thumbnail {
-    display: block;
+    display: grid;
+    grid-template-columns: repeat(var(--thumbnail-columns, 1), minmax(0, 1fr));
+    grid-template-rows: repeat(var(--thumbnail-rows, 1), minmax(0, 1fr));
+    gap: 2px;
     width: 100%;
     margin-bottom: 16px;
     overflow: hidden;
@@ -53,6 +75,26 @@ const thumbnail = project.coverImage ?? project.image;
     height: 100%;
     display: block;
     object-fit: cover;
+  }
+
+  .comparison-tile {
+    display: block;
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .comparison-tile span {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 3px 5px;
+    background: rgba(0, 0, 0, 0.68);
+    color: #fff;
+    font-size: 0.65rem;
+    line-height: 1.25;
   }
 
   .category {

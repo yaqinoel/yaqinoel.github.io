@@ -8,6 +8,12 @@ type ProjectImage = {
   caption?: LocalizedText;
 };
 
+type ProjectComparison = {
+  title: LocalizedText;
+  caption?: LocalizedText;
+  images: (ProjectImage & { histogram?: ProjectImage })[];
+};
+
 type ProjectSection = {
   title: LocalizedText;
   body?: LocalizedText;
@@ -34,12 +40,15 @@ export type Project = {
   summary: LocalizedText;
   detailSummary?: LocalizedText;
   category: LocalizedText;
-  tags: string[];
+  tags: (string | LocalizedText)[];
   repositoryUrl?: string;
   demoUrl?: string;
   sourceNote?: LocalizedText;
   coverImage?: ProjectImage;
+  coverFit?: 'cover' | 'contain';
+  coverComparison?: ProjectImage[];
   detailImage?: ProjectImage;
+  comparisons?: ProjectComparison[];
   image?: ProjectImage;
   images?: ProjectImage[];
   video?: {
@@ -54,7 +63,254 @@ export type Project = {
   featured?: boolean;
 };
 
+const colorMappingExamples = [
+  { file: 'anime-original', histogram: 'anime-hist-original', label: { en: 'Original', fr: 'Original', zh: '原图' } },
+  { file: 'anime-auto-center', histogram: 'anime-hist-center', label: { en: 'Nearest center', fr: 'Centre le plus proche', zh: '最近中心' } },
+  { file: 'anime-auto-linear', histogram: 'anime-hist-linear', label: { en: 'Linear', fr: 'Linéaire', zh: '线性映射' } },
+  { file: 'anime-auto', histogram: 'anime-hist-gaussian', label: { en: 'Gaussian', fr: 'Gaussien', zh: '高斯映射' } },
+];
+
+const colorMappingImages: ProjectImage[] = colorMappingExamples.map(({ file, label }) => ({
+  src: `/media/projects/color-harmonization/${file}.webp`,
+  alt: {
+    en: `Automatic template matching comparison: ${label.en}`,
+    fr: `Comparaison de sélection automatique du modèle : ${label.fr}`,
+    zh: `自动模板匹配对比：${label.zh}`,
+  },
+  caption: label,
+}));
+
 export const projects: Project[] = [
+  {
+    slug: 'it-defense',
+    title: {
+      en: 'IT Defense - Cybersecurity Tower Defense',
+      fr: 'IT Defense - Tower defense de sensibilisation à la cybersécurité',
+      zh: 'IT Defense - 网络安全主题塔防游戏',
+    },
+    category: {
+      en: 'Serious Games course group project',
+      fr: 'Projet de groupe du cours Serious Games',
+      zh: 'Serious Games 课程小组项目',
+    },
+    summary: {
+      en: 'A pixel-art tower defense game built with Godot to introduce cybersecurity concepts. Protect office computers, combine complementary defenses and balance spending with daily income goals, while learning through quizzes and a threat journal.',
+      fr: 'Un tower defense en pixel art développé avec Godot pour découvrir la cybersécurité. Protéger les ordinateurs, combiner les défenses et équilibrer les dépenses avec les objectifs financiers, tout en apprenant grâce aux quiz et au journal des menaces.',
+      zh: '一个使用 Godot 开发的网络安全主题像素塔防游戏。玩家需要保护办公室电脑、组合不同防御措施并平衡投入与每日收益，同时通过测验和威胁日志了解网络安全知识。',
+    },
+    detailSummary: {
+      en: 'IT Defense is an educational tower defense game developed collaboratively for the HAI921I Serious Games course at Université de Montpellier. Players purchase and position defenses against cybersecurity threats across three in-game days. Working computers generate income, while successful intrusions temporarily shut them down. Completing each day requires repelling every wave and retaining the required balance. An interactive tutorial, quizzes and a threat journal connect strategy with cybersecurity awareness.',
+      fr: 'IT Defense est un tower defense pédagogique réalisé en groupe pour le cours HAI921I Serious Games de l’Université de Montpellier. Les joueurs achètent et placent des défenses contre des menaces informatiques au fil de trois journées. Les ordinateurs en service génèrent des revenus, tandis que les intrusions les arrêtent temporairement. Pour terminer une journée, il faut repousser toutes les vagues et conserver le solde requis. Tutoriel interactif, quiz et journal des menaces associent stratégie et sensibilisation à la cybersécurité.',
+      zh: 'IT Defense 是蒙彼利埃大学 HAI921I Serious Games 课程中合作开发的教育型塔防游戏。玩家在三个游戏日中购买、布置防御措施，抵御网络安全威胁。正常运行的电脑会产生收入，成功入侵则会使其暂时停机。通关不仅需要抵御全部波次，还必须保留规定的资金余额。交互式教程、测验和威胁日志将策略玩法与网络安全教育结合起来。',
+    },
+    tags: ['Godot', 'GDScript', 'Tower Defense', 'Serious Game', 'Pixel Art', 'Cybersecurity'],
+    repositoryUrl: 'https://github.com/yaqinoel/HAI921I-Projet-IT_Defense',
+    demoUrl: 'https://doublejean.itch.io/it-defense',
+    sourceNote: {
+      en: 'Play the French-language game in your browser on itch.io, or download it for Windows and Linux. The repository contains the Godot project and source code.',
+      fr: 'Le jeu est en français, jouable dans le navigateur sur itch.io et téléchargeable pour Windows et Linux. Le dépôt contient le projet Godot et le code source.',
+      zh: '游戏为法语版本，可通过 itch.io 在浏览器中试玩，也可下载 Windows 或 Linux 版本。仓库提供 Godot 工程和源代码。',
+    },
+    coverImage: {
+      src: '/media/projects/it-defense/cover.png',
+      alt: {
+        en: 'IT Defense main menu and pixel-art office environment',
+        fr: 'Menu principal d’IT Defense et environnement de bureau en pixel art',
+        zh: 'IT Defense 主菜单和像素风办公室环境',
+      },
+    },
+    coverFit: 'contain',
+    detailImage: {
+      src: '/media/projects/it-defense/gameplay.png',
+      alt: {
+        en: 'IT Defense gameplay with office computers, defense slots and incoming threats',
+        fr: 'Partie d’IT Defense avec ordinateurs, emplacements de défense et menaces entrantes',
+        zh: 'IT Defense 实战场景：办公室电脑、防御槽位和来袭威胁',
+      },
+      caption: {
+        en: 'Position defenses to cover the lanes and keep office computers running.',
+        fr: 'Placer les défenses pour couvrir les voies et garder les ordinateurs en service.',
+        zh: '布置防御措施覆盖攻击路线，保护办公室电脑持续运行。',
+      },
+    },
+    comparisons: [
+      {
+        title: {
+          en: 'Strategy and Learning',
+          fr: 'Stratégie et apprentissage',
+          zh: '策略与学习',
+        },
+        images: [
+          {
+            src: '/media/projects/it-defense/shop.png',
+            alt: {
+              en: 'IT Defense shop with available defenses and antivirus information',
+              fr: 'Boutique d’IT Defense avec les défenses disponibles et les informations sur l’antivirus',
+              zh: 'IT Defense 商店，展示可购买的防御措施与杀毒防御说明',
+            },
+            caption: {
+              en: 'Shop and defense information',
+              fr: 'Boutique et informations sur les défenses',
+              zh: '商店与防御措施说明',
+            },
+          },
+          {
+            src: '/media/projects/it-defense/quiz.png',
+            alt: {
+              en: 'Cybersecurity quiz asking which defense is effective against viruses',
+              fr: 'Quiz de cybersécurité sur la défense efficace contre les virus',
+              zh: '网络安全测验：选择能够有效防御病毒的措施',
+            },
+            caption: {
+              en: 'Cybersecurity quiz',
+              fr: 'Quiz de cybersécurité',
+              zh: '网络安全测验',
+            },
+          },
+        ],
+      },
+    ],
+    highlights: [
+      {
+        en: 'Defense placement and threat-specific effectiveness encourage complementary strategies and coverage of adjacent lanes.',
+        fr: 'Le placement et l’efficacité variable des défenses selon les menaces encouragent les combinaisons complémentaires et la couverture des voies adjacentes.',
+        zh: '防御措施对不同威胁具有不同效果，需要通过组合与布局覆盖相邻攻击路线。',
+      },
+      {
+        en: 'An economy tied to computer uptime: intrusions interrupt income, and repeated attacks extend downtime. Each day combines wave survival with a minimum balance objective.',
+        fr: 'Une économie liée au fonctionnement des ordinateurs : les intrusions interrompent les revenus et les attaques répétées prolongent l’arrêt. Chaque journée associe survie aux vagues et objectif financier.',
+        zh: '经济系统与电脑运行状态关联：入侵会中断收入，重复入侵会延长停机时间；每日目标同时考验防守和资金管理。',
+      },
+      {
+        en: 'An interactive tutorial, quizzes and a threat journal introduce threats and protective measures throughout three progressively challenging days.',
+        fr: 'Un tutoriel interactif, des quiz et un journal présentent les menaces et les protections au fil de trois journées progressives.',
+        zh: '通过交互式教程、测验和威胁日志，在三个逐步引入新威胁的游戏日中学习防护知识。',
+      },
+      {
+        en: 'Shop, stackable inventory, defense inspection and removal, day transitions, result summaries, pause and volume controls complete the game loop.',
+        fr: 'Boutique, inventaire empilable, inspection et retrait des défenses, transitions, bilans, pause et réglages audio complètent la boucle de jeu.',
+        zh: '商店、可堆叠库存、防御信息查看与移除、日期切换、结果统计、暂停和音量设置组成完整游戏流程。',
+      },
+    ],
+  },
+  {
+    slug: 'color-harmonization',
+    title: {
+      en: 'Color Harmonization',
+      fr: 'Color Harmonization - Harmonisation des couleurs',
+      zh: 'Color Harmonization - 图像色彩协调',
+    },
+    category: {
+      en: 'Personal image processing project',
+      fr: 'Projet personnel de traitement d’images',
+      zh: '个人图像处理项目',
+    },
+    summary: {
+      en: 'A C++ / Qt desktop application for exploring image color harmonization through hue templates, three mapping methods and optional graph-cut optimization, with side-by-side images and hue histograms.',
+      fr: 'Une application de bureau C++ / Qt pour explorer l’harmonisation des couleurs à partir de modèles de teintes, de trois méthodes de transformation et d’une optimisation optionnelle par coupe de graphe, avec comparaison des images et histogrammes.',
+      zh: '一个使用 C++ / Qt 开发的桌面应用，通过色相模板、三种色相映射方法和可选的图割优化探索图像色彩协调，并支持原图、结果与色相直方图的交互式对比。',
+    },
+    detailSummary: {
+      en: 'A learning-oriented desktop application inspired by Cohen-Or et al.’s SIGGRAPH 2006 paper Color Harmonization. It analyzes an image’s hue distribution, selects a harmonic template automatically or manually, and shifts hues toward that template. The Qt interface supports parameter adjustment, visual comparison and result export. The project explores the paper’s ideas alongside simpler mapping methods rather than claiming a complete reproduction.',
+      fr: 'Une application pédagogique inspirée de l’article Color Harmonization de Cohen-Or et al., présenté à SIGGRAPH 2006. Elle analyse la distribution des teintes, sélectionne automatiquement ou manuellement un modèle harmonique, puis transforme les teintes vers ce modèle. L’interface Qt permet d’ajuster les paramètres, de comparer les résultats et de les exporter. Le projet explore les idées de l’article et des transformations plus simples, sans prétendre à une reproduction complète.',
+      zh: '这是一个受 Cohen-Or 等人在 SIGGRAPH 2006 发表的 Color Harmonization 论文启发的学习型桌面应用。程序分析图像的色相分布，自动或手动选择和谐模板，再将色相向模板区域映射。Qt 界面支持参数调整、结果对比和图像导出。项目在探索论文思想的同时加入了更简单的映射方法用于比较，并非对原论文全部细节的完整复现。',
+    },
+    tags: [
+      'C++', 'Qt 6', 'Image Processing', 'Color Harmonization', 'Graph Cut',
+      { en: 'Color Spaces', fr: 'Espaces colorimétriques', zh: '色彩空间' },
+    ],
+    repositoryUrl: 'https://github.com/yaqinoel/ColorHarmonization',
+    sourceNote: {
+      en: 'See the repository for mapping comparisons, graph-cut examples, implementation notes, the paper reference and build instructions.',
+      fr: 'Le dépôt présente les comparaisons de transformations, les exemples de coupe de graphe, les détails d’implémentation, la référence de l’article et les instructions de compilation.',
+      zh: '映射方法对比、图割效果示例、实现说明、论文参考和编译方法可在 GitHub 仓库中查看。',
+    },
+    coverComparison: colorMappingImages,
+    detailImage: {
+      src: '/media/projects/color-harmonization/application.png',
+      alt: {
+        en: 'Color Harmonization interface comparing the original image, harmonized result, hue histograms and algorithm settings',
+        fr: 'Interface Color Harmonization comparant l’image originale, le résultat harmonisé, les histogrammes de teintes et les paramètres',
+        zh: 'Color Harmonization 界面，展示原图、协调结果、色相直方图和算法参数',
+      },
+      caption: {
+        en: 'Original and harmonized images with circular hue histograms, template overlays and adjustable algorithm settings.',
+        fr: 'Images originale et harmonisée, histogrammes circulaires des teintes, superposition des modèles et paramètres ajustables.',
+        zh: '原图与色彩协调结果对比，下方为圆形色相直方图与模板叠加，右侧可调整算法参数。',
+      },
+    },
+    comparisons: [
+      {
+        title: {
+          en: 'Automatic Template Matching',
+          fr: 'Sélection automatique du modèle',
+          zh: '自动模板匹配',
+        },
+        images: colorMappingImages.map((image, index) => ({
+          ...image,
+          histogram: {
+            src: `/media/projects/color-harmonization/${colorMappingExamples[index].histogram}.webp`,
+            alt: {
+              en: `Hue histogram: ${colorMappingExamples[index].label.en}`,
+              fr: `Histogramme des teintes : ${colorMappingExamples[index].label.fr}`,
+              zh: `色相直方图：${colorMappingExamples[index].label.zh}`,
+            },
+          },
+        })),
+        caption: {
+          en: 'Original and three mappings, each with its independently normalized hue histogram below. Each run selects template T at 265.5° with graph cut enabled (lambda 0.5, color sigma 30°). Gaussian sigma scale: 0.5. The graph-cut linear mapping uses a different distance scale from its non-graph-cut variant.',
+          fr: 'Original et trois transformations, chacun accompagné en dessous de son histogramme de teintes normalisé indépendamment. Chaque essai sélectionne le modèle T à 265,5° avec coupe de graphe (lambda 0,5, sigma couleur 30°). Échelle sigma gaussienne : 0,5. La transformation linéaire avec coupe de graphe utilise une autre échelle de distance que sa variante sans coupe.',
+          zh: '原图与三种映射结果，每张图下方为对应的色相直方图，分别独立归一化。各次运行均自动选出 T 模板、旋转 265.5°，启用图割（lambda 0.5、颜色 sigma 30°）；高斯 sigma 比例为 0.5。图割版线性映射与非图割版使用不同的距离缩放。',
+        },
+      },
+      {
+        title: {
+          en: 'Graph Cut Comparison',
+          fr: 'Comparaison avec et sans coupe de graphe',
+          zh: '图割效果对比',
+        },
+        images: [
+          {
+            src: '/media/projects/color-harmonization/peacock-i129-no-cut.webp',
+            alt: { en: 'Gaussian mapping without graph cut', fr: 'Transformation gaussienne sans coupe de graphe', zh: '不启用图割的高斯映射结果' },
+            caption: { en: 'Without graph cut', fr: 'Sans coupe de graphe', zh: '关闭图割' },
+          },
+          {
+            src: '/media/projects/color-harmonization/peacock-i129-graph-cut.webp',
+            alt: { en: 'Gaussian mapping with graph cut', fr: 'Transformation gaussienne avec coupe de graphe', zh: '启用图割的高斯映射结果' },
+            caption: { en: 'With graph cut', fr: 'Avec coupe de graphe', zh: '开启图割' },
+          },
+        ],
+        caption: {
+          en: 'Same input, Gaussian mapping (sigma scale 0.5), template I at 129°. Graph cut uses lambda 2 and color sigma 10°. It reduces the color split along the neck in this example, but other regions may change or develop artifacts.',
+          fr: 'Même image, transformation gaussienne (échelle sigma 0,5), modèle I à 129°. Coupe de graphe : lambda 2 et sigma couleur 10°. Elle réduit la séparation des couleurs le long du cou dans cet exemple, mais peut modifier d’autres régions ou produire des artefacts.',
+          zh: '相同输入、高斯映射（sigma 比例 0.5）、I 模板旋转 129°。图割参数为 lambda 2、颜色 sigma 10°。此示例中图割减少了颈部的色彩割裂，但其他区域仍可能改变或出现伪影。',
+        },
+      },
+    ],
+    highlights: [
+      {
+        en: 'RGB/HSV conversion and weighted hue histograms for automatic template and rotation search, with manual selection and preview.',
+        fr: 'Conversion RGB/HSV et histogrammes pondérés pour rechercher automatiquement un modèle et sa rotation, avec sélection et aperçu manuels.',
+        zh: '实现 RGB/HSV 转换与加权色相直方图，支持模板及旋转角度的自动搜索、手动选择与预览。',
+      },
+      {
+        en: 'Nearest-center, linear and Gaussian hue mapping to compare different recoloring behaviors.',
+        fr: 'Transformations des teintes vers le centre le plus proche, linéaire et gaussienne pour comparer les comportements de recoloration.',
+        zh: '提供最近扇区中心、线性和高斯三种色相映射方法，对比不同重着色效果。',
+      },
+      {
+        en: 'Optional graph-cut direction assignment to encourage spatial coherence. Results remain dependent on the image and parameters, and artifacts may occur.',
+        fr: 'Attribution optionnelle des directions par coupe de graphe pour favoriser la cohérence spatiale. Les résultats dépendent de l’image et des paramètres, et des artefacts restent possibles.',
+        zh: '通过可选的图割优化分配色相移动方向，促进空间一致性；效果受图像和参数影响，仍可能产生伪影。',
+      },
+      {
+        en: 'Qt Widgets interface for image import, side-by-side comparison, circular histogram visualization, parameter control and result export.',
+        fr: 'Interface Qt Widgets pour importer les images, comparer les résultats, visualiser les histogrammes circulaires, régler les paramètres et exporter les résultats.',
+        zh: '使用 Qt Widgets 实现图像导入、并排对比、圆形直方图可视化、参数控制和结果导出。',
+      },
+    ],
+  },
   {
     slug: 'position-based-dynamics',
     title: {
