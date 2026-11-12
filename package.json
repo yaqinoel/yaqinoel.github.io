@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "cv:build": "typst compile cv/cv.typ cv/cv.pdf",
+    "cv:watch": "typst watch cv/cv.typ cv/cv.pdf"
   },
   "dependencies": {
     "astro": "^6.4.4",

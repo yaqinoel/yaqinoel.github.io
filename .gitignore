@@ -1,5 +1,7 @@
 # build output
 dist/
+cv/build/
+cv/cv.pdf
 
 # generated types
 .astro/
@@ -31,6 +33,7 @@ public/media/projects/GJ_Fly/level-3-fail.mp4
 public/media/projects/GJ_Fly/level-3-clear.mp4
 
 # VS Code local workspace files
+!.vscode/
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
